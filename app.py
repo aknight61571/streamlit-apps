@@ -78,7 +78,7 @@ st.markdown("""
         <b>Summary</b>
     </div>
     <div class="summary-item">1. Opioid use causes stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
-    <div class="summary-item">2. Interruption in OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
+    <div class="summary-item">2. Interruption of OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
     <div class="summary-item">3. Employees first identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 3</u></i></a></div>
 </div>
 """, unsafe_allow_html=True)
