@@ -32,10 +32,27 @@ st.markdown("""
     }
     .footnote i {
         color: #aaaaaa;
-        }
+    }
     .divider {
         margin: 3rem 0;
         border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .summary-box {
+        background-color: rgba(30, 144, 255, 0.1);
+        border-left: 4px solid deepskyblue;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 0 4px 4px 0;
+    }
+    .summary-item {
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+    }
+    .summary-box b {
+        color: deepskyblue;
+        display: block;
+        margin-bottom: 0.75rem;
+        font-size: 18px;
     }
 </style>
 """, unsafe_allow_html=True)
