@@ -54,6 +54,20 @@ st.markdown("""
         margin-bottom: 0.75rem;
         font-size: 18px;
     }
+    .summary-item a i {
+        font-style: italic;
+        text-decoration: underline;
+        color: deepskyblue !important;
+    }
+    .summary-item a:hover i {
+        color: lightskyblue !important;
+    }
+    .section-anchor {
+        display: block;
+        position: relative;
+        top: -100px;
+        visibility: hidden;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -63,14 +77,13 @@ st.markdown("""
     <div class="section-text">
         <b>Summary</b>
     </div>
-    <div class="summary-item">1. Opioid use causes severe stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
-    <div class="summary-item">2. Interruption of OpioidRx-AI service increases frequency of opioid use among employees.</div>
-    <div class="summary-item">3. Employees identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter.</div>
+    <div class="summary-item">1. Opioid use causes stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
+    <div class="summary-item">2. Interruption in OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
+    <div class="summary-item">3. Employees first identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 3</u></i></a></div>
 </div>
 """, unsafe_allow_html=True)
 
 # ─── Prepare Bar Chart: Overdose PMR by Occupation ───────────────────────────
-# Data from CDC: Construction workers highest overdose rate
 bar_data = {
     "Occupation": [
         "Construction and Extraction",
@@ -90,7 +103,6 @@ bar_data = {
     "PMR_upper": [165, 147, 134, 122, 116, 114, 113, 102, 95, 89, None]
 }
 df_bar = pd.DataFrame(bar_data)
-# Sort and place '...' at bottom
 df_main = df_bar[df_bar['Occupation'] != '...'].sort_values('PMR_mean', ascending=False)
 df_dummy = df_bar[df_bar['Occupation'] == '...']
 df_sorted = pd.concat([df_main, df_dummy], ignore_index=True)
@@ -122,6 +134,52 @@ fig_bar.update_layout(
         title=dict(text='<b>Deaths per 100,000 Employees</b>')
     )
 )
+
+# ─── SECTION 0: Wellness Cost ──────────────────────────────────────────────────
+st.markdown('<div class="section-anchor" id="wellness"></div>', unsafe_allow_html=True)
+st.markdown("### Cost of Opioids: Wellness")
+st.markdown("""
+<div class="section-text">
+    Using the Kessler-6 (K6) Scale as a metric, recent studies have shown that those with access to an opioid 
+    consistently grade in the most severe category of stress.<sup>1</sup> Individuals in this K6 category are 
+    3.5× more likely to experience chronic diseases, such as diabetes, hypertension, and obesity,<sup>2</sup> 
+    are absent an additional 6 days annually, and are 40% less productive in the workplace.<sup>3</sup> Construction workers are not 
+    only nearly twice as likely to have a Substance Use Disorder (SUD), but also suffer the highest rate of 
+    opioid overdose deaths of any occupation in the United States.<sup>4</sup>
+    <u>Hover graphs for exact values.</u>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="footnote">
+    <b>1.</b> <i>National Library of Medicine</i>, 2024 <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11003197/" target="_blank" style="color: lightblue;">PMC11003197</a><br>
+    <b>2.</b> <i>CDC Prevention Center</i>, 2014 <a href="https://www.cdc.gov/pcd/issues/2014/14_0211.htm" target="_blank" style="color: lightblue;">CDC PCD 2014;11</a><br>
+    <b>3.</b> <i>American Psychological Association</i>, 2019 <a href='https://psycnet.apa.org/doiLanding?doi=10.1037%2Focp0000155' target="_blank" style="color: lightblue;">link</a><br>
+    <b>4.</b> <i>National Library of Medicine</i>, 2023 <a href="https://pubmed.ncbi.nlm.nih.gov/37639452/" target="_blank" style="color: lightblue;">PMID 37639452</a>
+</div>
+""", unsafe_allow_html=True)
+
+st.plotly_chart(fig_bar, use_container_width=True)
+st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
+# ─── SECTION 1: Case Study ────────────────────────────────────────────────────
+st.markdown('<div class="section-anchor" id="case-study"></div>', unsafe_allow_html=True)
+st.markdown("### Case Study: OpioidRx-AI Interruption")
+st.markdown("""
+<div class="section-text">
+    The advent of the COVID-19 pandemic in 2020 brought the rise of remote healthcare;
+    temporarily closing brick-and-mortar facilities and interrupting non-patient accessibility
+    to providers. A notable OPCM client witnessed soaring rates of opioid use during the
+    third and fourth quarters due to diminished outreach.<sup>1</sup> The issue was quickly moderated
+    as physical locations reopened in Q1 2023 and lack of outreach was resolved.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="footnote">
+    <b>1.</b> <i>Internal Reporting</i>, 2025
+</div>
+""", unsafe_allow_html=True)
 
 # ─── Graph 1: Opioid Prescription Rates ───────────────────────────────────────
 quarters_1 = ["Q1, 2020", "Q2, 2020", "Q3, 2020", "Q4, 2020",
@@ -158,6 +216,30 @@ fig_scripts.add_annotation(
     xanchor="center",
     align="center"
 )
+
+st.plotly_chart(fig_scripts, use_container_width=True)
+st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
+# ─── SECTION 2: Financial Cost ────────────────────────────────────────────────
+st.markdown('<div class="section-anchor" id="financial-cost"></div>', unsafe_allow_html=True)
+st.markdown("### Cost of Opioids: Financial")
+st.markdown("""
+<div class="section-text">
+    Without regard to employee turnover, opioid abuse costs employers <b>$10 billion</b> per year from absenteeism
+    and presenteeism alone.<sup>1</sup> In addition, the cost of replacing a worker is expected to be 50% of their annual salary.<sup>2</sup>
+    Increased absenteeism among workers taking an Opioid is typically attributed to unexpected illness or injury- which can
+    be costly. Between 2023 and 2025, Fargo Homebuilder's Association's quarterly health plan spend on members currently
+    identified by <b><i>OpioidRx-AI</i></b> ranged from <b>$128,921</b> to <b>$512,688</b>. However, the plan spend on those
+    same members during the sequential quarter ranged from <b>$29,535</b> to <b>$107,760</b>.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div style="font-size: 13px; margin-top: 10px;">
+  <p><b>1.</b> <i>Providence Recovery Place</i>, 2023. <a href="https://providencerecoveryplace.org/opioid-addiction-cost-american-employers-between-10-25-billion-a-year/" target="_blank" style="color: lightblue;">link</a></p>
+  <p><b>2.</b> <i>National Safety Council</i>, 2024. <a href="https://www.nsc.org/workplace/safety-topics/drugs-at-work/implications-of-drug-use-for-employers" target="_blank" style="color: lightblue;">link</a></p>
+</div>
+""", unsafe_allow_html=True)
 
 # ─── Graph 2: Plan Spend Comparison ───────────────────────────────────────────
 quarters_2 = ["Q1, 2023", "Q2, 2023", "Q3, 2023", "Q4, 2023",
@@ -209,74 +291,6 @@ fig.update_layout(
     height=600
 )
 
-# ─── SECTION 0: Wellness Cost ──────────────────────────────────────────────────
-st.markdown("### Cost of Opioids: Wellness")
-st.markdown("""
-<div class="section-text">
-    Using the Kessler-6 (K6) Scale as a metric, recent studies have shown that those with access to an opioid 
-    consistently grade in the most severe category of stress.<sup>1</sup> Individuals in this K6 category are 
-    3.5× more likely to experience chronic diseases, such as diabetes, hypertension, and obesity,<sup>2</sup> 
-    are absent an additional 6 days annually, and are 40% less productive in the workplace.<sup>3</sup> Construction workers are not 
-    only nearly twice as likely to have a Substance Use Disorder (SUD), but also suffer the highest rate of 
-    opioid overdose deaths of any occupation in the United States.<sup>4</sup>
-    <u>Hover graphs for exact values.</u>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="footnote">
-    <b>1.</b> <i>National Library of Medicine</i>, 2024 <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11003197/" target="_blank" style="color: lightblue;">PMC11003197</a><br>
-    <b>2.</b> <i>CDC Prevention Center</i>, 2014 <a href="https://www.cdc.gov/pcd/issues/2014/14_0211.htm" target="_blank" style="color: lightblue;">CDC PCD 2014;11</a><br>
-    <b>3.</b> <i>American Psychological Association</i>, 2019 <a href='https://psycnet.apa.org/doiLanding?doi=10.1037%2Focp0000155' target="_blank" style="color: lightblue;">link</a><br>
-    <b>4.</b> <i>National Library of Medicine</i>, 2023 <a href="https://pubmed.ncbi.nlm.nih.gov/37639452/" target="_blank" style="color: lightblue;">PMID 37639452</a>
-</div>
-""", unsafe_allow_html=True)
-
-# ─── Insert Bar Chart Here ─────────────────────────────────────────────────────
-st.plotly_chart(fig_bar, use_container_width=True)
-
-st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-
-# ─── SECTION 1 ────────────────────────────────────────────────────────────────
-st.markdown("### Case Study: OpioidRx-AI Interruption")
-st.markdown("""
-<div class="section-text">
-    The advent of the COVID-19 pandemic in 2020 brought the rise of remote healthcare;
-    temporarily closing brick-and-mortar facilities and interrupting non-patient accessibility
-    to providers. A notable OPCM client witnessed soaring rates of opioid use during the
-    third and fourth quarters due to diminished outreach.<sup>1</sup> The issue was quickly moderated
-    as physical locations reopened in Q1 2023 and lack of outreach was resolved.
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="footnote">
-    <b>1.</b> <i>Internal Reporting</i>, 2025
-</div>
-""", unsafe_allow_html=True)
-
-st.plotly_chart(fig_scripts, use_container_width=True)
-
-st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-
-# ─── SECTION 2 ────────────────────────────────────────────────────────────────
-st.markdown("### Cost of Opioids: Financial")
-st.markdown("""
-<div class="section-text">
-    Without regard to employee turnover, opioid abuse costs employers <b>$10 billion</b> per year from absenteeism
-    and presenteeism alone.<sup>1</sup> In addition, the cost of replacing a worker is expected to be 50% of their annual salary.<sup>2</sup>
-    Increased absenteeism among workers taking an Opioid is typically attributed to unexpected illness or injury- which can
-    be costly. Between 2023 and 2025, Fargo Homebuilder's Association's quarterly health plan spend on members currently
-    identified by <b><i>OpioidRx-AI</i></b> ranged from <b>$128,921</b> to <b>$512,688</b>. However, the plan spend on those
-    same members during the sequential quarter ranged from <b>$29,535</b> to <b>$107,760</b>.
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div style="font-size: 13px; margin-top: 10px;">
-  <p><b>1.</b> <i>Providence Recovery Place</i>, 2023. <a href="https://providencerecoveryplace.org/opioid-addiction-cost-american-employers-between-10-25-billion-a-year/" target="_blank" style="color: lightblue;">link</a></p>
-  <p><b>2.</b> <i>National Safety Council</i>, 2024. <a href="https://www.nsc.org/workplace/safety-topics/drugs-at-work/implications-of-drug-use-for-employers" target="_blank" style="color: lightblue;">link</a></p>
-</div>
-""", unsafe_allow_html=True)
+st.plotly_chart(fig, use_container_width=True)
 
 st.plotly_chart(fig, use_container_width=True)
