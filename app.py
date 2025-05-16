@@ -7,7 +7,7 @@ import pandas as pd
 st.set_page_config(
     page_title="Dark Report Demo",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
 )
 
 # ─── Custom Styles ─────────────────────────────────────────────────────────────
@@ -42,46 +42,34 @@ st.markdown("""
         border-left: 4px solid deepskyblue;
         padding: 1rem;
         margin-bottom: 2rem;
+        border-radius: 0 4px 4px 0;
     }
     .summary-item {
         margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
     }
-    .jump-link {
+    .summary-box b {
+        color: deepskyblue;
+        display: block;
+        margin-bottom: 0.75rem;
+        font-size: 18px;
+    }
+    .summary-item a i {
         font-style: italic;
         text-decoration: underline;
         color: deepskyblue !important;
-        cursor: pointer;
     }
-    .jump-link:hover {
+    .summary-item a:hover i {
         color: lightskyblue !important;
+    }
+    .section-anchor {
+        display: block;
+        position: relative;
+        top: -100px;
+        visibility: hidden;
     }
 </style>
 """, unsafe_allow_html=True)
-
-# ─── JavaScript for Anchor Links ──────────────────────────────────────────────
-st.components.v1.html("""
-<script>
-// Workaround for Streamlit Cloud anchor links
-document.addEventListener('DOMContentLoaded', function() {
-    const jumpLinks = document.querySelectorAll('.jump-link');
-    jumpLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('data-target');
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-                // Add temporary highlight
-                targetElement.style.backgroundColor = 'rgba(30, 144, 255, 0.2)';
-                setTimeout(() => {
-                    targetElement.style.backgroundColor = '';
-                }, 1000);
-            }
-        });
-    });
-});
-</script>
-""", height=0)
 
 # ─── Summary Section ──────────────────────────────────────────────────────────
 st.markdown("""
@@ -90,8 +78,8 @@ st.markdown("""
         <b>Summary</b>
     </div>
     <div class="summary-item">1. Opioid use causes stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
-    <div class="summary-item">2. Interruption in OpioidRx-AI service increases frequency of opioid use among employees. <span class="jump-link" data-target="case-study">Jump to 2</span></div>
-    <div class="summary-item">3. Employees first identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <span class="jump-link" data-target="financial-cost">Jump to 3</span></div>
+    <div class="summary-item">2. Interruption in OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
+    <div class="summary-item">3. Employees first identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 3</u></i></a></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -148,7 +136,8 @@ fig_bar.update_layout(
 )
 
 # ─── SECTION 0: Wellness Cost ──────────────────────────────────────────────────
-st.markdown("### <span id='wellness'>Cost of Opioids: Wellness</span>", unsafe_allow_html=True)
+st.markdown('<div class="section-anchor" id="wellness"></div>', unsafe_allow_html=True)
+st.markdown("### Cost of Opioids: Wellness")
 st.markdown("""
 <div class="section-text">
     Using the Kessler-6 (K6) Scale as a metric, recent studies have shown that those with access to an opioid 
@@ -174,7 +163,8 @@ st.plotly_chart(fig_bar, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
 # ─── SECTION 1: Case Study ────────────────────────────────────────────────────
-st.markdown("### <span id='case-study'>Case Study: OpioidRx-AI Interruption</span>", unsafe_allow_html=True)
+st.markdown('<div class="section-anchor" id="case-study"></div>', unsafe_allow_html=True)
+st.markdown("### Case Study: OpioidRx-AI Interruption")
 st.markdown("""
 <div class="section-text">
     The advent of the COVID-19 pandemic in 2020 brought the rise of remote healthcare;
@@ -231,7 +221,8 @@ st.plotly_chart(fig_scripts, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
 # ─── SECTION 2: Financial Cost ────────────────────────────────────────────────
-st.markdown("### <span id='financial-cost'>Cost of Opioids: Financial</span>", unsafe_allow_html=True)
+st.markdown('<div class="section-anchor" id="financial-cost"></div>', unsafe_allow_html=True)
+st.markdown("### Cost of Opioids: Financial")
 st.markdown("""
 <div class="section-text">
     Without regard to employee turnover, opioid abuse costs employers <b>$10 billion</b> per year from absenteeism
@@ -255,21 +246,22 @@ quarters_2 = ["Q1, 2023", "Q2, 2023", "Q3, 2023", "Q4, 2023",
               "Q1, 2024", "Q2, 2024", "Q3, 2024", "Q4, 2024"]
 prev_spend = [512688, 351373, 161113, 498677, 400721, 128921, 264965, 278064]
 curr_spend = [107760, 52793, 29871, 37936, 29535, 38199, 53114, 45638]
+total_savings = sum([p - c for p, c in zip(prev_spend, curr_spend)])
 
 fig = go.Figure()
 fig.add_trace(go.Scatter(
     x=quarters_2, y=prev_spend,
     mode='lines+markers',
     name='Previous Quarter Spend',
-    line=dict(color='orange', width=4)
-)
+    line=dict(color='orange', width=4),
+))
 fig.add_trace(go.Scatter(
     x=quarters_2, y=curr_spend,
     mode='lines+markers',
     name='Current Quarter Spend',
     line=dict(color='deepskyblue', width=4),
     fill='tonexty',
-    fillcolor='rgba(30, 144, 255, 0.2)'
+    fillcolor='rgba(30, 144, 255, 0.2)',
 ))
 for i in range(len(quarters_2)):
     fig.add_trace(go.Scatter(
@@ -284,7 +276,7 @@ for i in range(len(quarters_2)):
 fig.add_annotation(
     x=3.5,
     y=160000,
-    text="Estimated Savings: $1,985,876",
+    text=f"Estimated Savings: $1,985,876",
     showarrow=False,
     font=dict(color="white", size=16),
     bgcolor="rgba(0,0,0,0.6)"
@@ -298,5 +290,7 @@ fig.update_layout(
     legend=dict(x=0.01, y=0.99),
     height=600
 )
+
+st.plotly_chart(fig, use_container_width=True)
 
 st.plotly_chart(fig, use_container_width=True)
