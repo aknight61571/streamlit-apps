@@ -79,7 +79,8 @@ st.markdown("""
     </div>
     <div class="summary-item">1. Opioid use causes stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
     <div class="summary-item">2. Interruption of OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
-    <div class="summary-item">3. Employees identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 3</u></i></a></div>
+    <div class="summary-item">3. OpioidRx-AI ameliorates risky behavior in both identified providers and members. <a href="#provider-outcomes"><i><u>Jump to 3</u></i></a></div>
+    <div class="summary-item">4. Employees identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 4</u></i></a></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -220,13 +221,15 @@ fig_scripts.add_annotation(
 st.plotly_chart(fig_scripts, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-# ─── NEW SECTION: Provider & Member Outcomes ──────────────────────────────────
-st.markdown("### Provider & Member Identification Outcomes")
+# ─── SECTION 2: Provider Outcomes ─────────────────────────────────────────────
+st.markdown('<div class="section-anchor" id="provider-outcomes"></div>', unsafe_allow_html=True)
+st.markdown("### OpioidRx-AI Changes Provider, Member Behaviors")
 st.markdown("""
 <div class="section-text">
-    OPCM's identification system has successfully tracked 394 providers and 267 members since July 2022.
-    The program maintains active monitoring of 42 providers and 27 members, with the remainder no longer
-    identified as opioid risks. This represents a significant reduction in potential opioid-related cases.
+    Between July, 2022 and March, 2025 OPCM identified 267 plan members who had potential prescription opioid misuse or abuse problems.  
+    394 network providers wrote opioid prescriptions for these 267 plan members. Presently 240 of the 267 identified plan members no longer 
+    show evidence of prescription opioid misuse or abuse. In addition, 352 of the 394 identified prescribers have been brought into 
+    conformance with CDC opioid prescribing guidelines.
 </div>
 """, unsafe_allow_html=True)
 
@@ -278,7 +281,7 @@ for status in df_combined['status'].unique():
         ))
 
 # Calculate center position between provider and member sections
-center_x = ((max(df_providers['x']) + min(df_members['x'])) / 2) - 1.1
+center_x = ((max(df_providers['x']) + min(df_members['x'])) / 2) - 1.35
 
 fig_grid.update_layout(
     template="plotly_dark",
@@ -320,7 +323,7 @@ fig_grid.update_yaxes(autorange="reversed")
 st.plotly_chart(fig_grid, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-# ─── SECTION 2: Financial Cost ────────────────────────────────────────────────
+# ─── SECTION 3: Financial Cost ────────────────────────────────────────────────
 st.markdown('<div class="section-anchor" id="financial-cost"></div>', unsafe_allow_html=True)
 st.markdown("### Cost of Opioids: Financial")
 st.markdown("""
