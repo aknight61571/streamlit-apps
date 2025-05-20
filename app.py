@@ -277,12 +277,10 @@ for status in df_combined['status'].unique():
             showlegend=(group == 'Providers')
         ))
 
+# Calculate center position between provider and member sections
+center_x = (max(df_providers['x']) + min(df_members['x'])) / 2
+
 fig_grid.update_layout(
-    title=dict(
-        text="<b>Identified Provider & Member Outcomes: 07/22 - 03/25</b>",
-        x=0.43,
-        font=dict(size=22)
-    ),
     template="plotly_dark",
     xaxis=dict(visible=False),
     yaxis=dict(visible=False),
@@ -290,19 +288,30 @@ fig_grid.update_layout(
     height=700,
     margin=dict(l=40, r=40, t=80, b=40),
     annotations=[
+        # Main title centered between sections
+        dict(
+            x=center_x,
+            y=-10,
+            text="<b>Identified Provider & Member Outcomes: 07/22 - 03/25</b>",
+            showarrow=False,
+            font=dict(color="white", size=16),
+            xanchor="center"
+        ),
+        # Provider subtitle
         dict(
             x=max(df_providers['x']) / 2,
             y=-5,
             text="<b>Providers</b>",
             showarrow=False,
-            font=dict(color="white", size=16)
+            font=dict(color="white", size=14)
         ),
+        # Member subtitle
         dict(
             x=max(df_members['x']) - (max(df_members['x']) - min(df_members['x'])) / 2,
             y=-5,
             text="<b>Members</b>",
             showarrow=False,
-            font=dict(color="white", size=16)
+            font=dict(color="white", size=14)
         )
     ]
 )
