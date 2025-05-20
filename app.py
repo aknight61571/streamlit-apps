@@ -278,7 +278,7 @@ for status in df_combined['status'].unique():
         ))
 
 # Calculate center position between provider and member sections
-center_x = (max(df_providers['x']) + min(df_members['x'])) / 2
+center_x = ((max(df_providers['x']) + min(df_members['x'])) / 2) - 0.5
 
 fig_grid.update_layout(
     template="plotly_dark",
