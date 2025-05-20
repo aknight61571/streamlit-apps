@@ -220,6 +220,97 @@ fig_scripts.add_annotation(
 st.plotly_chart(fig_scripts, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
+# ─── NEW SECTION: Provider & Member Outcomes ──────────────────────────────────
+st.markdown("### Provider & Member Identification Outcomes")
+st.markdown("""
+<div class="section-text">
+    OPCM's identification system has successfully tracked 394 providers and 267 members since July 2022.
+    The program maintains active monitoring of 42 providers and 27 members, with the remainder no longer
+    identified as opioid risks. This represents a significant reduction in potential opioid-related cases.
+</div>
+""", unsafe_allow_html=True)
+
+# ─── NEW GRAPH: Provider & Member Outcomes ───────────────────────────────────
+def build_grid(n_total, n_active, label_active, label_inactive, x_offset=0):
+    n_inactive = n_total - n_active
+    n_rows = 20
+    spacing = 1.5
+
+    statuses = [label_inactive] * n_inactive + [label_active] * n_active
+    data = []
+
+    for i, status in enumerate(statuses):
+        col = i // n_rows
+        row = i % n_rows
+        data.append({
+            "status": status,
+            "x": col * spacing + x_offset,
+            "y": row * spacing
+        })
+    return pd.DataFrame(data)
+
+df_providers = build_grid(394, 42, "Currently Identified", "No Longer Identified")
+df_members = build_grid(267, 27, "Currently Identified", "No Longer Identified",
+                       x_offset=(max(df_providers['x']) + 4))
+df_combined = pd.concat([
+    df_providers.assign(group='Providers'),
+    df_members.assign(group='Members')
+])
+
+fig_grid = go.Figure()
+color_map = {
+    "Currently Identified": "orange",
+    "No Longer Identified": "lightskyblue"
+}
+
+for status in df_combined['status'].unique():
+    for group in df_combined['group'].unique():
+        df_plot = df_combined[(df_combined['status'] == status) & (df_combined['group'] == group)]
+        fig_grid.add_trace(go.Scatter(
+            x=df_plot['x'],
+            y=df_plot['y'],
+            mode='markers',
+            marker=dict(size=20, color=color_map[status], symbol='square'),
+            name=status if group == 'Providers' else None,
+            hovertext=[status] * len(df_plot),
+            hoverinfo='text',
+            showlegend=(group == 'Providers')
+        ))
+
+fig_grid.update_layout(
+    title=dict(
+        text="<b>Identified Provider & Member Outcomes: 07/22 - 03/25</b>",
+        x=0.43,
+        font=dict(size=22)
+    ),
+    template="plotly_dark",
+    xaxis=dict(visible=False),
+    yaxis=dict(visible=False),
+    showlegend=True,
+    height=700,
+    margin=dict(l=40, r=40, t=80, b=40),
+    annotations=[
+        dict(
+            x=max(df_providers['x']) / 2,
+            y=-5,
+            text="<b>Providers</b>",
+            showarrow=False,
+            font=dict(color="white", size=16)
+        ),
+        dict(
+            x=max(df_members['x']) - (max(df_members['x']) - min(df_members['x'])) / 2,
+            y=-5,
+            text="<b>Members</b>",
+            showarrow=False,
+            font=dict(color="white", size=16)
+        )
+    ]
+)
+fig_grid.update_yaxes(autorange="reversed")
+
+st.plotly_chart(fig_grid, use_container_width=True)
+st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
 # ─── SECTION 2: Financial Cost ────────────────────────────────────────────────
 st.markdown('<div class="section-anchor" id="financial-cost"></div>', unsafe_allow_html=True)
 st.markdown("### Cost of Opioids: Financial")
