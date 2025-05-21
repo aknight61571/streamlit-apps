@@ -385,7 +385,7 @@ fig.add_annotation(
     bgcolor="rgba(0,0,0,0.6)"
 )
 fig.update_layout(
-    title="Plan Spend Comparison by Quarter",
+    title="Identified Member Plan Spend: Current vs Previous FQ",
     xaxis_title="Quarter",
     yaxis_title="Plan Spend ($)",
     template="plotly_dark",
