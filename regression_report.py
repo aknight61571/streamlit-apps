@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import plotly.graph_objects as go
+import plotly.io as pio
 
 # ─── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(layout='wide', page_title='Opioid Cost Report', initial_sidebar_state='collapsed')
@@ -93,15 +94,15 @@ Jack has <b>no OpioidRx-AI risk factors</b> and made <b>4 total medical/Rx trans
 col1, col2 = st.columns([1, 1], gap='small')
 
 with col1:
-    fig = joblib.load('cost_reg_coeffs_nolog.pkl')
+    fig = pio.read_json('cost_reg_coeffs_nolog.json')
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    fig = joblib.load('risk_factor_removal.pkl')
+    fig = pio.read_json('risk_factor_removal.json')
     fig.update_layout(height=350)
     st.plotly_chart(fig, use_container_width=True)
 
-    fig2 = joblib.load('reg_cost_pmem.pkl')
+    fig2 = pio.read_json('reg_cost_pmem.json')
     fig2.update_layout(height=350)
     st.plotly_chart(fig2, use_container_width=True)
 
@@ -118,5 +119,5 @@ with col3:
     st.markdown('Some text goes here...')
 
 with col4:
-    fig = joblib.load('reg_sph.pkl')
+    fig = pio.read_json('reg_sph.json')
     st.plotly_chart(fig, use_container_width=True)
