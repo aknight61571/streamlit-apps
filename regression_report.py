@@ -86,7 +86,7 @@ Jack has <b>no OpioidRx-AI risk factors</b> and made <b>4 total medical/Rx trans
 </ul>
 
 <div style="color:lightgray; font-size:16px">
-<br><p><b>OPCM outreach removes all risk factors from 53% of members within 1 quarter</b> with a 0.17% reidentification rate. DO YOU SEE THIS??</p>
+<br><p><b>OPCM outreach removes all risk factors from 53% of members within 1 quarter</b> with a 0.17% reidentification rate.</p>
 </div>
 """, unsafe_allow_html=True)
 
