@@ -232,10 +232,6 @@ st.markdown("""
     <li>If Jack were flagged for <b><u>2+ Opioid Pharmacies</u></b> his expected next cost (<b><u>$1,082.62</u></b>) raises about <u>3× as much as becoming younger than 2 years old.</u></li>
     <li>If Jack were flagged for <b><u>Opioid + Benzo</u></b> his expected next cost (<b><u>$895.10</u></b>) raises about as much as <u>aging 35 years and needing 11 more transactions before next quarter</u></li>
 </ul>
-
-<div style="color:lightgray; font-size:16px">
-<br><p><b>OPCM outreach removes all risk factors from 53% of members within 1 quarter</b> with a 0.17% reidentification rate</p>
-</div>
 """, unsafe_allow_html=True)
 
 # ─── Provider Outreach Section ────────────────────────────────────────────────
