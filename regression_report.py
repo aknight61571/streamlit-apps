@@ -143,7 +143,7 @@ for var in coef_series.index:
 col1, col2 = st.columns([1.2, 0.8], gap='small')
 
 with col1:
-    fig = joblib.load('cost_reg_coeffs_nolog.pkl')
+    fig = pio.read_json('cost_reg_coeffs_nolog.json')
 
     if hasattr(fig.data[0], 'y'):  # horizontal bar check
         var_names = fig.data[0].y
