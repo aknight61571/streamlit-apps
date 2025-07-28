@@ -77,7 +77,8 @@ Top and bottom 5% of costs removed to reduce skewness.</i> Adjusted R<sup>2</sup
 # Jack Introduction (first part)
 st.markdown("""
 <div style="color:lightgray; font-size:16px">
-<p><b>Linear Regression reveals the change in one variable associated with the change in other variables.</b><br><br>
+<p><b>Linear Regression reveals the change in one variable associated with the change in other variables.</b><br>
+High-risk members taking opioids have severe cost implications.<br>
 <b><u>Imagine a 32-year-old plan member named Jack.</u></b><br>
 Jack has <b>no OpioidRx-AI risk factors</b> and made <b>4 total medical/Rx transactions costing $250</b> to his insurer this quarter.<br>
 <i>The model expects Jack's cost next quarter to be</i> <b><u>$298.71</u>. Update Jack's cost with cost indicators below.</b></p>
