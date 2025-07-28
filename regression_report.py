@@ -63,7 +63,7 @@ with col2:
     st.image("green_logo.png", use_container_width=True)
 
 # ─── Section 1 ────────────────────────────────────────────────────────────────
-st.markdown('<div class="section-header">Linear Regression Analysis: Cost Next Quarter</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">Modeling Cost Next Quarter: Regression</div>', unsafe_allow_html=True)
 # Regression Explanation (smaller font)
 st.markdown("""
 <div style="color:lightgray; font-size:14px">
