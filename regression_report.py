@@ -140,6 +140,10 @@ for var in coef_series.index:
     if var not in st.session_state:
         st.session_state[var] = defaults.get(var, 0)
 
+# Initialize new session state variables
+if 'time_period' not in st.session_state:
+    st.session_state['time_period'] = 'Next FQ'
+
 # Layout: Main graph on left (wider), interactive controls on right (narrower)
 col1, col2 = st.columns([1.2, 0.8], gap='small')
 
@@ -165,10 +169,19 @@ with col1:
 with col2:
     st.markdown('<div class="section-header">Interactive: Estimate Jack\'s Cost</div>', unsafe_allow_html=True)
     
-    # Reset button
-    if st.button("Reset Jack to Default"):
-        for var, val in defaults.items():
-            st.session_state[var] = val
+    # Control buttons row
+    button_col1, button_col2 = st.columns(2)
+    with button_col1:
+        if st.button("Reset Jack to Default"):
+            for var, val in defaults.items():
+                st.session_state[var] = val
+    
+    with button_col2:
+        if st.button("Next: FQ / 4 FQs"):
+            if st.session_state['time_period'] == 'Next FQ':
+                st.session_state['time_period'] = 'Next 4 FQs'
+            else:
+                st.session_state['time_period'] = 'Next FQ'
 
     # Auto-update logic (before creating widgets)
     age = st.session_state.get('Age', 32)
@@ -222,9 +235,13 @@ with col2:
     # Calculate prediction
     predicted_cost = sum(user_inputs[v] * coef_series[v] for v in coef_series.index)
     
+    # Apply quarterly/annual multiplier
+    display_cost = predicted_cost * (4 if st.session_state['time_period'] == 'Next 4 FQs' else 1)
+    period_label = st.session_state.get('time_period', 'Next FQ')
+    
     with cols[1]:
         # Display result next to Paid Amount field
-        st.markdown(f"<div style='color:white; font-size:20px; margin-top:2rem;'><b><u>Expected Next Cost: ${predicted_cost:,.2f}</u></b></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='color:white; font-size:20px; margin-top:2rem;'><b><u>Expected Next Cost ({period_label}): ${display_cost:,.2f}</u></b></div>", unsafe_allow_html=True)
 
 # Jack Scenario bullets (second part)
 st.markdown("""
