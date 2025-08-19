@@ -1,5 +1,4 @@
 import streamlit as st
-import joblib
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.io as pio
@@ -273,7 +272,7 @@ with col1:
         unsafe_allow_html=True)
 
     # Regression coefficients graph (colored by current param state)
-    fig = joblib.load('cost_reg_coeffs_nolog.pkl')
+    fig = pio.read_json('cost_reg_coeffs_nolog.pkl')
     if hasattr(fig.data[0], 'y'):
         var_names = fig.data[0].y
         colors = []
@@ -350,3 +349,4 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
