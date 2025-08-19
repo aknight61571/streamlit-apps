@@ -3,8 +3,6 @@ import pandas as pd
 import plotly.io as pio
 import numpy as np
 
-st.cache_data.clear()
-
 # ─── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(layout='wide', page_title='Opioid Cost Report', initial_sidebar_state='collapsed')
 st.markdown("""
@@ -350,6 +348,7 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
 
 
 
