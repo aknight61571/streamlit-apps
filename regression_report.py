@@ -62,15 +62,13 @@ st.markdown("""
 st.markdown('<div class="summary-header">Summary</div>', unsafe_allow_html=True)
 col_summary_l, col_summary_r = st.columns([3, 1], gap='medium')
 with col_summary_l:
-    st.markdown("""
+    st.markdown(f"""
     - Point 1: Something about cost trends  
-    - Point 2: Something about member identification  
+    - Point 2: Something about member identification 
+    - {pd.read_csv('reg_report_normal_rows_deets.csv').iloc[0,:}
     """)
 with col_summary_r:
-    try:
-        st.image("green_logo.png", use_container_width=True)
-    except FileNotFoundError:
-        st.info("Logo file 'green_logo.png' not found")
+    st.image("green_logo.png", use_container_width=True)
 
 # ─── Section 1 ────────────────────────────────────────────────────────────────
 st.markdown('<div class="section-header">Linear Regression Analysis: Cost Next Quarter</div>', unsafe_allow_html=True)
@@ -152,6 +150,7 @@ if 'sort_by' not in st.session_state:
     st.session_state['sort_by'] = 'Antipsychotic + Opioid'
 
 # Load datasets
+@st.cache_data
 def load_datasets():
     try:
         opc_data = pd.read_csv('reg_report_opc_rows_deets.csv')
@@ -163,14 +162,6 @@ def load_datasets():
         return {'High Risk': empty_df, 'Withdrawal': empty_df, 'Regular': empty_df}
 
 datasets = load_datasets()
-
-# Remove temporary diagnostic code
-
-
-# Temporary diagnostic - show what columns exist
-for name, df in datasets.items():
-    if not df.empty:
-        st.write(f"{name} columns:", df.columns.tolist())
 
 # Helper lists
 yes_no_fields = ['3+ Opioid Refills', '$300+ Plan Spend(This Quarter)', '2+ Opioid Prescribers',
@@ -281,22 +272,17 @@ with col1:
         unsafe_allow_html=True)
 
     # Regression coefficients graph (colored by current param state)
-    try:
-        fig = joblib.load('cost_reg_coeffs_nolog.pkl')
-        if hasattr(fig.data[0], 'y'):
-            var_names = fig.data[0].y
-            colors = []
-            for v in var_names:
-                if v in yes_no_fields:
-                    colors.append('#1E3A5F' if st.session_state.get(v, 'No') == 'Yes' else 'lightskyblue')
-                else:
-                    colors.append('#1E3A5F' if st.session_state.get(v, 0) != 0 else 'lightskyblue')
-            fig.data[0].marker.color = colors
-        st.plotly_chart(fig, use_container_width=True)
-    except FileNotFoundError:
-        st.error("Chart file 'cost_reg_coeffs_nolog.pkl' not found. Please upload this file to your repository.")
-    except Exception as e:
-        st.error(f"Error loading chart: {str(e)}")
+    fig = pio.read_json('cost_reg_coeffs_nolog.json')
+    if hasattr(fig.data[0], 'y'):
+        var_names = fig.data[0].y
+        colors = []
+        for v in var_names:
+            if v in yes_no_fields:
+                colors.append('#1E3A5F' if st.session_state.get(v, 'No') == 'Yes' else 'lightskyblue')
+            else:
+                colors.append('#1E3A5F' if st.session_state.get(v, 0) != 0 else 'lightskyblue')
+        fig.data[0].marker.color = colors
+    st.plotly_chart(fig, use_container_width=True)
 
 with col2:
     # Add spacing to align Regression Parameters header with Actual Cost line
@@ -358,25 +344,18 @@ During the study, <b>99.83%</b> of flagged members remained low-risk after indic
 # ─── Two Graphs ──────────────────────────────────────────────────────────────
 col3, col4 = st.columns([1, 1], gap='small')
 with col3:
-    try:
-        import json
-        with open('risk_factor_removal.json', 'r') as f:
-            fig_data = json.load(f)
-        fig_a = go.Figure(fig_data)
-        st.plotly_chart(fig_a, use_container_width=True)
-    except FileNotFoundError:
-        st.error("Chart file 'risk_factor_removal.json' not found. Please upload this file to your repository.")
-    except Exception as e:
-        st.error(f"Error loading chart: {str(e)}")
+    fig_a = pio.read_json('risk_factor_removal.json')
+    st.plotly_chart(fig_a, use_container_width=True)
 with col4:
-    try:
-        import json
-        with open('reg_cost_pmem.json', 'r') as f:
-            fig_data = json.load(f)
-        fig_b = go.Figure(fig_data)
-        st.plotly_chart(fig_b, use_container_width=True)
-    except FileNotFoundError:
-        st.error("Chart file 'reg_cost_pmem.json' not found. Please upload this file to your repository.")
-    except Exception as e:
-        st.error(f"Error loading chart: {str(e)}")
+    fig_b = pio.read_json('reg_cost_pmem.json')
+    st.plotly_chart(fig_b, use_container_width=True)
+
+
+
+
+
+
+
+
+
 
