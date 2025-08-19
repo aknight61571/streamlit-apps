@@ -149,8 +149,7 @@ if 'member_toggle' not in st.session_state:
 if 'sort_by' not in st.session_state:
     st.session_state['sort_by'] = 'Antipsychotic + Opioid'
 
-# Load datasets
-@st.cache_data
+
 def load_datasets():
     try:
         opc_data = pd.read_csv('reg_report_opc_rows_deets.csv')
@@ -349,6 +348,7 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
 
 
 
