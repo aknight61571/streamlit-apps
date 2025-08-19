@@ -65,7 +65,7 @@ with col_summary_l:
     st.markdown(f"""
     - Point 1: Something about cost trends  
     - Point 2: Something about member identification 
-    - {pd.read_csv('reg_report_normal_rows_deets.csv').iloc[0,:}
+    - {pd.read_csv('reg_report_normal_rows_deets.csv').iloc[0,:]}
     """)
 with col_summary_r:
     st.image("green_logo.png", use_container_width=True)
@@ -349,6 +349,7 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
 
 
 
