@@ -1,5 +1,4 @@
 import streamlit as st
-import plotly.graph_objects as go
 import pandas as pd
 import plotly.io as pio
 import numpy as np
@@ -349,4 +348,5 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
 
