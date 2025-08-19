@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.io as pio
 import numpy as np
-st.markdown(f'{pd.read_csv('reg_report_normal_rows_deets.csv').shape}')
+
 # ─── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(layout='wide', page_title='Opioid Cost Report', initial_sidebar_state='collapsed')
 st.markdown("""
@@ -62,9 +62,10 @@ st.markdown("""
 st.markdown('<div class="summary-header">Summary</div>', unsafe_allow_html=True)
 col_summary_l, col_summary_r = st.columns([3, 1], gap='medium')
 with col_summary_l:
-    st.markdown("""
+    st.markdown(f"""
     - Point 1: Something about cost trends  
-    - Point 2: Something about member identification  
+    - Point 2: Something about member identification 
+    - {pd.read_csv('reg_report_normal_rows_deets.csv').shape}
     """)
 with col_summary_r:
     st.image("green_logo.png", use_container_width=True)
@@ -348,6 +349,7 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
 
 
 
