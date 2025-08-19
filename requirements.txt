@@ -1,6 +1,6 @@
 streamlit
 plotly==5.24.1
-pandas
+pandas==2.2.3
 joblib
 numpy
 
