@@ -150,36 +150,17 @@ if 'sort_by' not in st.session_state:
     st.session_state['sort_by'] = 'Antipsychotic + Opioid'
 
 # Load datasets
-#@st.cache_data
-# Replace your load_datasets() function with this:
-
 @st.cache_data
 def load_datasets():
-    datasets = {}
-    files = {
-        'High Risk': 'reg_report_opc_rows_deets.csv',
-        'Withdrawal': 'reg_report_wd_rows_deets.csv', 
-        'Regular': 'reg_report_normal_rows_deets.csv'
-    }
-    
-    for name, filename in files.items():
-        try:
-            df = pd.read_csv(filename)
-            st.write(f"✅ Loaded {name}: {df.shape}, Toggle column: {'toggle' in df.columns}")
-            if 'toggle' in df.columns:
-                toggle_count = df['toggle'].notna().sum()
-                st.write(f"   - Valid toggle values: {toggle_count}")
-                if toggle_count > 0:
-                    st.write(f"   - Sample toggles: {df['toggle'].dropna().head(3).tolist()}")
-            datasets[name] = df
-        except FileNotFoundError:
-            st.error(f"❌ File not found: {filename}")
-            datasets[name] = pd.DataFrame()
-        except Exception as e:
-            st.error(f"❌ Error loading {filename}: {str(e)}")
-            datasets[name] = pd.DataFrame()
-    
-    return datasets
+    try:
+        opc_data = pd.read_csv('reg_report_opc_rows_deets.csv')
+        wd_data = pd.read_csv('reg_report_wd_rows_deets.csv')
+        normal_data = pd.read_csv('reg_report_normal_rows_deets.csv')
+        return {'High Risk': opc_data, 'Withdrawal': wd_data, 'Regular': normal_data}
+    except Exception:
+        empty_df = pd.DataFrame()
+        return {'High Risk': empty_df, 'Withdrawal': empty_df, 'Regular': empty_df}
+
 datasets = load_datasets()
 
 # Helper lists
