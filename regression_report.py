@@ -146,7 +146,7 @@ if 'member_type' not in st.session_state:
 if 'member_toggle' not in st.session_state:
     st.session_state['member_toggle'] = None
 if 'sort_by' not in st.session_state:
-    st.session_state['sort_by'] = 'Antipsychotic + Opioid'
+    st.session_state['sort_by'] = 'None'
 
 # Load datasets
 @st.cache_data
@@ -168,9 +168,24 @@ yes_no_fields = ['3+ Opioid Refills', '$300+ Plan Spend(This Quarter)', '2+ Opio
                  'Pain Med: WD', 'Anxiolitic: WD', 'Digestive/Miscellaneous: WD',
                  '50-100 mg Morphine Equivalent']
 
+# Define sort options based on member type
+sort_options = {
+    'Withdrawal': ['None', 'Pain Med: WD', 'Anxiolitic: WD', 'Digestive/Miscellaneous: WD'],
+    'High Risk': ['None', 'Antipsychotic + Opioid', 'Benzo + Opioid', '3+ Opioid Refills', '2+ Opioid Pharmacies', '50-100 mg Morphine Equivalent'],
+    'Regular': ['None', 'Age', 'n Transactions(This Quarter)', 'Plan Spend(This Quarter)']
+}
+
+# Get current sort options based on member type
+current_member_type = st.session_state.get('member_type', 'High Risk')
+current_sort_options = sort_options.get(current_member_type, ['None'])
+
+# Reset sort_by if it's not in current options
+if st.session_state.get('sort_by') not in current_sort_options:
+    st.session_state['sort_by'] = 'None'
+
 # Apply sorting to the current dataset based on sort_by selection
 current_dataset = datasets.get(st.session_state.get('member_type', 'High Risk'), pd.DataFrame())
-if not current_dataset.empty and st.session_state.get('sort_by') in current_dataset.columns:
+if not current_dataset.empty and st.session_state.get('sort_by') != 'None' and st.session_state.get('sort_by') in current_dataset.columns:
     sort_col = st.session_state['sort_by']
     
     # Check if the column is binary (contains only 0s and 1s, or Yes/No)
@@ -256,7 +271,7 @@ with col1:
         st.selectbox("Rx-AI Criteria", options=['High Risk', 'Withdrawal', 'Regular'],
                      key='member_type', help="Choose the risk group")
     with f2:
-        st.selectbox("Sort by", options=list(coef_series.index), key='sort_by')
+        st.selectbox("Sort by", options=current_sort_options, key='sort_by')
     with f3:
         st.selectbox("Member", options=all_toggles, key='member_toggle',
                      help="Select by unique 'toggle' id (from any dataset)")
@@ -348,16 +363,3 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
