@@ -147,6 +147,8 @@ if 'member_toggle' not in st.session_state:
     st.session_state['member_toggle'] = None
 if 'sort_by' not in st.session_state:
     st.session_state['sort_by'] = 'None'
+if 'last_loaded_member' not in st.session_state:
+    st.session_state['last_loaded_member'] = None
 
 # Load datasets
 @st.cache_data
@@ -230,8 +232,12 @@ if sel_toggle is not None:
                 member_row = sub.iloc[0]
                 break
 
-# If member selected, push their values into session_state
-if member_row is not None:
+# Only load member data if it's a new selection (prevents overwriting manual changes)
+if member_row is not None and st.session_state.get('last_loaded_member') != sel_toggle:
+    # Update the last loaded member tracker
+    st.session_state['last_loaded_member'] = sel_toggle
+    
+    # Push member values into session_state
     for var in coef_series.index:
         if var in member_row.index:
             value = member_row[var]
@@ -239,11 +245,17 @@ if member_row is not None:
                 st.session_state[var] = 'Yes' if value in [1, 'Yes', True] else 'No'
             else:
                 st.session_state[var] = int(value) if pd.notna(value) else 0
-    if 'actual' in member_row.index and pd.notna(member_row['actual']):
-        try:
-            actual_cost = float(member_row['actual'])
-        except Exception:
-            actual_cost = 0.0
+
+# Always get actual cost if member is selected (for display purposes)
+if member_row is not None and 'actual' in member_row.index and pd.notna(member_row['actual']):
+    try:
+        actual_cost = float(member_row['actual'])
+    except Exception:
+        actual_cost = 0.0
+
+# Reset tracker when no member is selected
+if sel_toggle is None:
+    st.session_state['last_loaded_member'] = None
 
 # Auto-set spend-related field based on $300+ threshold (after member load)
 plan_spend_val = st.session_state.get('Plan Spend(This Quarter)', 250)
