@@ -1,101 +1,86 @@
 import streamlit as st
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
+import plotly.io as pio
+import numpy as np
 
-# ─── Page Config ───────────────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="Dark Report Demo",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
-
-# ─── Custom Styles ─────────────────────────────────────────────────────────────
+# ─── Page Config ──────────────────────────────────────────────────────────────
+st.set_page_config(layout='wide', page_title='Opioid Cost Report', initial_sidebar_state='collapsed')
 st.markdown("""
-<style>
-    .stApp {
-        background-color: #000000;
-        color: white;
-    }
-    .section-text {
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 0.5rem;
-    }
-    .footnote {
-        font-size: 13px;
-        color: #cccccc;
-        margin-top: 0.5rem;
-    }
-    .footnote b {
-        color: #ffffff;
-    }
-    .footnote i {
-        color: #aaaaaa;
-    }
-    .divider {
-        margin: 3rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .summary-box {
-        background-color: rgba(30, 144, 255, 0.1);
-        border-left: 4px solid deepskyblue;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        border-radius: 0 4px 4px 0;
-    }
-    .summary-item {
-        margin-bottom: 0.5rem;
-        padding-left: 0.5rem;
-    }
-    .summary-box b {
-        color: deepskyblue;
-        display: block;
-        margin-bottom: 0.75rem;
-        font-size: 18px;
-    }
-    .summary-item a i {
-        font-style: italic;
-        text-decoration: underline;
-        color: deepskyblue !important;
-    }
-    .summary-item a:hover i {
-        color: lightskyblue !important;
-    }
-    .section-anchor {
-        display: block;
-        position: relative;
-        top: -100px;
-        visibility: hidden;
-    }
-</style>
+    <style>
+        .element-container:has(.js-plotly-plot) + .element-container:has(.js-plotly-plot) {
+            margin-top: -1rem; /* adjust this value as needed */
+        }
+        /* Filter bar styling to differentiate from parameter controls */
+        .filter-bar {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 """, unsafe_allow_html=True)
 
-# ─── Summary Section ──────────────────────────────────────────────────────────
+# ─── Styling ──────────────────────────────────────────────────────────────────
 st.markdown("""
-<div class="summary-box">
-    <div class="section-text">
-        <b>Summary</b>
-    </div>
-    <div class="summary-item">1. Opioid use causes stress, which degrades physical health and productivity. Construction workers are much more likely to use opioids.</div>
-    <div class="summary-item">2. Interruption of OpioidRx-AI service increases frequency of opioid use among employees. <a href="#case-study"><i><u>Jump to 2</u></i></a></div>
-    <div class="summary-item">3. OpioidRx-AI ameliorates risky behavior in both identified providers and members. <a href="#provider-outcomes"><i><u>Jump to 3</u></i></a></div>
-    <div class="summary-item">4. Employees identified by OpioidRx-AI are expensive to insure. OPCM drastically lowers costs by the next quarter. <a href="#financial-cost"><i><u>Jump to 4</u></i></a></div>
+    <style>
+        .block-container {
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+        }
+        .summary-header {
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 2px solid white;
+            margin-bottom: 0.5rem;
+        }
+        .section-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+        .subtext {
+            font-size: 14px;
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+        .mini-header {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .mini-bullet {
+            font-size: 14px;
+            margin-left: 1rem;
+            color: #cccccc;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# ─── Summary ──────────────────────────────────────────────────────────────────
+st.markdown('<div class="summary-header">Summary</div>', unsafe_allow_html=True)
+col_summary_l, col_summary_r = st.columns([3, 1], gap='medium')
+with col_summary_l:
+    st.markdown(f"""
+    - Point 1: Something about cost trends  
+    - Point 2: Something about member identification 
+    """)
+with col_summary_r:
+    st.image("green_logo.png", use_container_width=True)
+
+# ─── Section 1 ────────────────────────────────────────────────────────────────
+st.markdown('<div class="section-header">Purpose</div>', unsafe_allow_html=True)
+# Regression Explanation (smaller font)
+st.markdown("""
+<div style="color:lightgray; font-size:14px">
+<p>
+OPCM esitmates 2% of a given healthcare plan's membership consists of high-risk opioid users and individuals going through withdrawal.<br>
+These members face health risks and soaring medical expenses. OPCM targets the providers of those members to ensure CDC adherence,<br>
+improve employee health, and reduce healthcare costs
+</p>
 </div>
 """, unsafe_allow_html=True)
-
-# ─── Purpose Section (Replaces Linear Regression Analysis Header) ─────────────
-st.markdown("### Purpose")
-st.markdown("""
-<div class="section-text">
-    OPCM esitmates 2% of a given healthcare plan's membership consists of high-risk opioid users and individuals going through withdrawal. 
-    These members face health risks and soaring medical expenses. OPCM targets the providers of those members to ensure CDC adherence, 
-    improve employee health, and reduce healthcare costs.
-</div>
-""", unsafe_allow_html=True)
-
-# (Remaining code unchanged...)
-
 
 # ─── Manual Scenario Builder ──────────────────────────────────────────────────
 
@@ -381,4 +366,3 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
-
