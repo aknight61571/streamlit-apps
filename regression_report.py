@@ -82,6 +82,19 @@ improve employee health, and reduce healthcare costs
 </div>
 """, unsafe_allow_html=True)
 
+
+fig = pio.read_json("proportion_found_expense.json")
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("### Compounding Costs")
+st.markdown("""
+<div style="color:lightgray; font-size:14px">
+<p>
+Plan members identified by OPCM tend to grow more expensive rather than stagnate
+The regression model below outlines the impact on future costs of OPCM identification
+</p>
+</div>
+""", unsafe_allow_html=True)
 # ─── Manual Scenario Builder ──────────────────────────────────────────────────
 
 # New coefficients for log(y) ~ X model (no intercept)
@@ -366,3 +379,4 @@ with col3:
 with col4:
     fig_b = pio.read_json('reg_cost_pmem.json')
     st.plotly_chart(fig_b, use_container_width=True)
+
