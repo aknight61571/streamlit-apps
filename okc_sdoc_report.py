@@ -32,22 +32,31 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Create two columns for layout
-col1, col2 = st.columns([3, 1])
+# Create container for header section
+header_col1, header_col2 = st.columns([3, 1])
 
-with col1:
+with header_col1:
     # Objectives section
     st.markdown('<div class="objectives-title">Objectives</div>', unsafe_allow_html=True)
-    st.markdown('<div class="divider-line"></div>', unsafe_allow_html=True)
-    
-    # Bullet points
-    st.markdown('<div class="bullet-point">• Explain OPCM Member Identification</div>', unsafe_allow_html=True)
-    st.markdown('<div class="bullet-point">• Explain OPCM Provider Outreach</div>', unsafe_allow_html=True)
-    st.markdown('<div class="bullet-point">• Explain Benefits: Employee Wellbeing & Costs</div>', unsafe_allow_html=True)
 
-with col2:
+with header_col2:
     # Logo in top right
     try:
         st.image("green_logo.png", width=200)
     except:
         st.info("Logo: green_logo.png")
+
+# Full-width divider line
+st.markdown('<div class="divider-line"></div>', unsafe_allow_html=True)
+
+# Bullet points
+st.markdown('<div class="bullet-point">• Explain OPCM Member Identification</div>', unsafe_allow_html=True)
+st.markdown('<div class="bullet-point">• Explain OPCM Provider Outreach</div>', unsafe_allow_html=True)
+st.markdown('<div class="bullet-point">• Explain Benefits: Employee Wellbeing & Costs</div>', unsafe_allow_html=True)
+
+# Spacing
+st.markdown("<br>", unsafe_allow_html=True)
+
+# New section header
+st.markdown('<div class="objectives-title">What Are OPCM Indicators?</div>', unsafe_allow_html=True)
+st.markdown('<div class="bullet-point">Update this text later</div>', unsafe_allow_html=True)
