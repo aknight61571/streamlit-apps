@@ -155,7 +155,7 @@ st.markdown(
     <br>
     <br>
     OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.
-Examples of indicators include simultaneous opioid and bezodiazepine prescriptions,<br> recieving opioids from 2+ physicians in the past 90 days<br>
+Examples of indicators include<br> simultaneous opioid and bezodiazepine prescriptions, recieving opioids from 2+ physicians in the past 90 days<br>
 and recieving opioids from 2+ pharmacies in the past 90 days""",
     unsafe_allow_html=True
 )
