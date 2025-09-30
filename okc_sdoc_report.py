@@ -97,18 +97,18 @@ def img_to_html(img_path):
     """Create an HTML image tag with Base64 encoded image data."""
     img_html = f"<img src='data:image/png;base64,{img_to_bytes(img_path)}' />"
     return img_html
-    
+
+img_src = img_to_html("gray_pill_bottle.png")
 with colA:
     st.markdown(
-        """
+        f"""
         <div class="box">
-            <img src="gray_pill_bottle.png" />
+            {img_src}
             <div class="box-text">50+ mg Morphine Equivalent</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
 with colB:
     st.markdown(
         """
