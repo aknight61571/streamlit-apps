@@ -51,5 +51,3 @@ with col2:
         st.image("green_logo.png", width=200)
     except:
         st.info("Logo: green_logo.png")
-</style>
-""", unsafe_allow_html=True)
