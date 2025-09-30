@@ -88,15 +88,9 @@ st.write("Update this text later")
 colA, colB, colC, colD = st.columns(4)
 
 with colA:
-    st.markdown(
-        """
-        <div class="box">
-            <img src="gray_pill_bottle.png" />
-            <div class="box-text">50+ mg Morphine Equivalent</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown('<div class="box">', unsafe_allow_html=True)
+    st.image("gray_pill_bottle.png", use_container_width=True)
+    st.markdown('<div class="box-text">50+ mg Morphine Equivalent</div></div>', unsafe_allow_html=True)
 
 with colB:
     st.markdown(
