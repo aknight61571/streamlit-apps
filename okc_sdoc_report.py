@@ -1,72 +1,55 @@
 import streamlit as st
-import plotly.express as px
-import plotly.graph_objects as go
-import pandas as pd
 
-# ─── Page Config ───────────────────────────────────────────────────────────────
+# Configure page with dark theme
 st.set_page_config(
-    page_title="Dark Report Demo",
+    page_title="OPCM Marketing Report",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="collapsed"
 )
 
-# ─── Custom Styles ─────────────────────────────────────────────────────────────
+# Custom CSS for dark theme and styling
 st.markdown("""
-<style>
+    <style>
     .stApp {
-        background-color: #000000;
-        color: white;
+        background-color: #0e1117;
     }
-    .section-text {
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 0.5rem;
-    }
-    .footnote {
-        font-size: 13px;
-        color: #cccccc;
-        margin-top: 0.5rem;
-    }
-    .footnote b {
+    .objectives-title {
         color: #ffffff;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
-    .footnote i {
-        color: #aaaaaa;
+    .divider-line {
+        border-top: 2px solid #ffffff;
+        margin: 10px 0 20px 0;
     }
-    .divider {
-        margin: 3rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .summary-box {
-        background-color: rgba(30, 144, 255, 0.1);
-        border-left: 4px solid deepskyblue;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        border-radius: 0 4px 4px 0;
-    }
-    .summary-item {
-        margin-bottom: 0.5rem;
-        padding-left: 0.5rem;
-    }
-    .summary-box b {
-        color: deepskyblue;
-        display: block;
-        margin-bottom: 0.75rem;
+    .bullet-point {
+        color: #ffffff;
         font-size: 18px;
+        margin: 10px 0;
+        padding-left: 20px;
     }
-    .summary-item a i {
-        font-style: italic;
-        text-decoration: underline;
-        color: deepskyblue !important;
-    }
-    .summary-item a:hover i {
-        color: lightskyblue !important;
-    }
-    .section-anchor {
-        display: block;
-        position: relative;
-        top: -100px;
-        visibility: hidden;
-    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Create two columns for layout
+col1, col2 = st.columns([3, 1])
+
+with col1:
+    # Objectives section
+    st.markdown('<div class="objectives-title">Objectives</div>', unsafe_allow_html=True)
+    st.markdown('<div class="divider-line"></div>', unsafe_allow_html=True)
+    
+    # Bullet points
+    st.markdown('<div class="bullet-point">• Explain OPCM Member Identification</div>', unsafe_allow_html=True)
+    st.markdown('<div class="bullet-point">• Explain OPCM Provider Outreach</div>', unsafe_allow_html=True)
+    st.markdown('<div class="bullet-point">• Explain Benefits: Employee Wellbeing & Costs</div>', unsafe_allow_html=True)
+
+with col2:
+    # Logo in top right
+    try:
+        st.image("green_logo.png", width=200)
+    except:
+        st.info("Logo: green_logo.png")
 </style>
 """, unsafe_allow_html=True)
