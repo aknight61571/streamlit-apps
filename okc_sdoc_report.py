@@ -95,11 +95,11 @@ def get_base64_image(image_path):
 
 # Then use it like this:
 with colA:
-    img_base64 = get_base64_image("gray_pill_bottle.png")
+    pills_base64 = get_base64_image("gray_pill_bottle.png")
     st.markdown(
         f"""
         <div class="box">
-            <img src="data:image/png;base64,{img_base64}" />
+            <img src="data:image/png;base64,{pills_base64}" />
             <div class="box-text">50+ mg Morphine Equivalent</div>
         </div>
         """,
@@ -107,12 +107,12 @@ with colA:
     )
 with colB:
     st.markdown(
-        """
+        f"""
         <div class="box">
             <div class="combo">
-                <img src="gray_pill_bottle.png" />
+                <img src="data:image/png;base64,{pills_base64}" />
                 <div class="plus-sign">+</div>
-                <img src="gray_pill_bottle.png" />
+                <img src="data:image/png;base64,{pills_base64}" />
             </div>
             <div class="box-text">Opioid + Benzo</div>
         </div>
@@ -121,13 +121,14 @@ with colB:
     )
 
 with colC:
+    doc_base64 = get_base64_image("gray_doctor.png")
     st.markdown(
-        """
+        f"""
         <div class="box">
             <div class="combo">
-                <img src="gray_pill_bottle.png" />
+                <img src="data:image/png;base64,{doc_base64}" />
                 <div class="plus-sign">+</div>
-                <img src="gray_doctor.png" />
+                <img src="data:image/png;base64,{doc_base64}" />
             </div>
             <div class="box-text">2+ Opioid Prescribers</div>
         </div>
@@ -136,13 +137,14 @@ with colC:
     )
 
 with colD:
+    pharm_base64 = get_base64_image("gray_pharmacy.png")
     st.markdown(
-        """
+        f"""
         <div class="box">
             <div class="combo">
-                <img src="gray_pill_bottle.png" />
+                <img src="data:image/png;base64,{pharm_base64}" />
                 <div class="plus-sign">+</div>
-                <img src="gray_pharmacy.png" />
+                <img src="data:image/png;base64,{pharm_base64}" />
             </div>
             <div class="box-text">2+ Opioid Pharmacies</div>
         </div>
