@@ -83,10 +83,6 @@ with col2:
 # --- FIRST TEXT SECTION ---
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<div class='section-header'>What Are OPCM Indicators?</div>", unsafe_allow_html=True)
-st.write(
-    """OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators<br>
-Examples of indicators include:"""
-)
 
 # --- FOUR BOXES ---
 colA, colB, colC, colD = st.columns(4)
@@ -154,3 +150,7 @@ with colD:
         """,
         unsafe_allow_html=True,
     )
+st.write(
+    """OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators<br>
+Examples of indicators include:"""
+)
