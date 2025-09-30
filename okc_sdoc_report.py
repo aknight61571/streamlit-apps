@@ -113,7 +113,7 @@ with colB:
                 <div class="plus-sign">+</div>
                 <img src="data:image/png;base64,{pills_base64}" />
             </div>
-            <div class="box-text">Opioid + Benzo</div>
+            <div class="box-text">Opioid + Benzodiazepine</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -150,7 +150,9 @@ with colD:
         """,
         unsafe_allow_html=True,
     )
-st.write(
-    """OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators<br>
-Examples of indicators include:"""
+st.markdown(
+    """OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.<br>
+Examples of indicators include a simultaneous opioid and bezodiazepine prescriptions, recieving opioids from 2+ physicians in the past 90 days<br>
+and recieving opioids from 2+ pharmacies in the past 90 days""",
+    unsafe_allow_html=True
 )
