@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 # Page config
 st.set_page_config(page_title="Marketing Report", layout="wide")
@@ -87,11 +88,23 @@ st.write("Update this text later")
 # --- FOUR BOXES ---
 colA, colB, colC, colD = st.columns(4)
 
-with colA:
-    st.markdown('<div class="box">', unsafe_allow_html=True)
-    st.image("gray_pill_bottle.png", use_container_width=True)
-    st.markdown('<div class="box-text">50+ mg Morphine Equivalent</div></div>', unsafe_allow_html=True)
+# Add this function at the top of your file
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
+# Then use it like this:
+with colA:
+    img_base64 = get_base64_image("gray_pill_bottle.png")
+    st.markdown(
+        f"""
+        <div class="box">
+            <img src="data:image/png;base64,{img_base64}" />
+            <div class="box-text">50+ mg Morphine Equivalent</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 with colB:
     st.markdown(
         """
