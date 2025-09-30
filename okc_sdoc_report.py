@@ -154,8 +154,11 @@ st.markdown(
     """
     <br>
     <br>
-    OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.
-Examples of indicators include simultaneous opioid and bezodiazepine<br> prescriptions, recieving opioids from 2+ physicians in the past 90 days<br>
-and recieving opioids from 2+ pharmacies in the past 90 days""",
+    OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.<br>
+    When risk reaches a pre-set threshold, OPCM pharmacist contact their precribers directly. <br><br>
+    Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism""",
     unsafe_allow_html=True
 )
+col1, col2, col3 = st.columns([16.5, 67, 16.5])
+with col2:
+    st.image("okc_cost_of_ident.png", use_container_width=True)
