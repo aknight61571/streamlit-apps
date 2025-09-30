@@ -13,6 +13,11 @@ st.markdown("""
     .stApp {
         background-color: #0e1117;
     }
+    /* Remove default Streamlit padding */
+    .block-container {
+        padding-top: 1rem;
+        padding-bottom: 0rem;
+    }
     .objectives-title {
         color: #ffffff;
         font-size: 20px;
@@ -26,7 +31,7 @@ st.markdown("""
     }
     .bullet-point {
         color: #ffffff;
-        font-size: 14px;
+        font-size: 15px;
         margin: 3px 0;
         padding-left: 20px;
         line-height: 1.3;
