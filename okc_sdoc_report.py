@@ -1,9 +1,9 @@
 import streamlit as st
 
-# Set page config
+# Page config
 st.set_page_config(page_title="Marketing Report", layout="wide")
 
-# Apply dark theme
+# Dark theme + box styles
 st.markdown(
     """
     <style>
@@ -23,22 +23,37 @@ st.markdown(
             margin-bottom: 5px;
         }
         .box {
-            background-color: #4A4A4A; /* medium-light grey */
+            background-color: #4A4A4A;  /* medium-light grey */
             border-radius: 12px;
             padding: 20px;
             text-align: center;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 220px;
+        }
+        .box img {
+            max-width: 80px;
+            height: auto;
+        }
+        .combo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
         .box-text {
             font-weight: bold;
-            margin-top: 12px;
+            margin-top: 15px;
             font-size: 16px;
+            text-align: center;
         }
         .plus-sign {
             font-size: 28px;
             font-weight: bold;
             color: white;
-            margin: 0 5px;
         }
     </style>
     """,
@@ -73,47 +88,57 @@ st.write("Update this text later")
 colA, colB, colC, colD = st.columns(4)
 
 with colA:
-    with st.container():
-        st.markdown("<div class='box'>", unsafe_allow_html=True)
-        st.image("gray_pill_bottle.png", width=80)
-        st.markdown("<div class='box-text'>50+ mg Morphine Equivalent</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="box">
+            <img src="gray_pill_bottle.png" />
+            <div class="box-text">50+ mg Morphine Equivalent</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 with colB:
-    with st.container():
-        st.markdown("<div class='box'>", unsafe_allow_html=True)
-        cols = st.columns([1, 0.3, 1])
-        with cols[0]:
-            st.image("gray_pill_bottle.png", width=80)
-        with cols[1]:
-            st.markdown("<div class='plus-sign'>+</div>", unsafe_allow_html=True)
-        with cols[2]:
-            st.image("gray_pill_bottle.png", width=80)
-        st.markdown("<div class='box-text'>Opioid + Benzo</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="box">
+            <div class="combo">
+                <img src="gray_pill_bottle.png" />
+                <div class="plus-sign">+</div>
+                <img src="gray_pill_bottle.png" />
+            </div>
+            <div class="box-text">Opioid + Benzo</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 with colC:
-    with st.container():
-        st.markdown("<div class='box'>", unsafe_allow_html=True)
-        cols = st.columns([1, 0.3, 1])
-        with cols[0]:
-            st.image("gray_pill_bottle.png", width=80)
-        with cols[1]:
-            st.markdown("<div class='plus-sign'>+</div>", unsafe_allow_html=True)
-        with cols[2]:
-            st.image("gray_doctor.png", width=80)
-        st.markdown("<div class='box-text'>2+ Opioid Prescribers</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="box">
+            <div class="combo">
+                <img src="gray_pill_bottle.png" />
+                <div class="plus-sign">+</div>
+                <img src="gray_doctor.png" />
+            </div>
+            <div class="box-text">2+ Opioid Prescribers</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 with colD:
-    with st.container():
-        st.markdown("<div class='box'>", unsafe_allow_html=True)
-        cols = st.columns([1, 0.3, 1])
-        with cols[0]:
-            st.image("gray_pill_bottle.png", width=80)
-        with cols[1]:
-            st.markdown("<div class='plus-sign'>+</div>", unsafe_allow_html=True)
-        with cols[2]:
-            st.image("gray_pharmacy.png", width=80)
-        st.markdown("<div class='box-text'>2+ Opioid Pharmacies</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="box">
+            <div class="combo">
+                <img src="gray_pill_bottle.png" />
+                <div class="plus-sign">+</div>
+                <img src="gray_pharmacy.png" />
+            </div>
+            <div class="box-text">2+ Opioid Pharmacies</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
