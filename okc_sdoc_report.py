@@ -181,4 +181,4 @@ with col1:
     
 col1, col2 = st.columns([33, 67])
 with col2:
-    st.image('okc_sdoc_savings.png',use_container_width=True)
+    st.image('qident_qafter.png',use_container_width=True)
