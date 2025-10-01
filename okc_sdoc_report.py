@@ -199,7 +199,7 @@ with col1:
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
     <br><br>
-    Doing the math, we see:''', unsafe_allow_html=True)
+    Given a ~2% identification rate per quarter:''', unsafe_allow_html=True)
     
     # User input for plan size
     plan_size = st.number_input('Enter Plan Size:', min_value=0, value=10000, step=500)
