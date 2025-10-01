@@ -179,4 +179,4 @@ col1, col2, col3 = st.columns([47.5, 5, 47.5])
 with col1:
     pio.read_json('risk_factor_removal.json')
 with col2:
-    st.image('okc_sdoc_savings.png'
+    st.image('okc_sdoc_savings.png')
