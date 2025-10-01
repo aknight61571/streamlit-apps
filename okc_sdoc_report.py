@@ -177,6 +177,7 @@ st.write("Update this later")
 col1, col2, col3 = st.columns([47.5, 5, 47.5])
 
 with col1:
-    pio.read_json('risk_factor_removal.json')
-with col2:
-    st.image('okc_sdoc_savings.png')
+    fig = pio.read_json('risk_factor_removal.json')
+    st.plotly_chart(fig,use_container_width=True)
+with col3:
+    st.image('okc_sdoc_savings.png',use_container_width=True)
