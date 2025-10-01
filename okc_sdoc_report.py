@@ -157,18 +157,18 @@ st.markdown(
     OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.<br>
     When risk reaches a pre-set threshold, OPCM pharmacist contact their precribers directly. <br><br>
     Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism.
-    <br> Outlier threshold is the maximum cost without be considered a financial outlier.
+    <br> Outlier threshold is the maximum cost without being considered a financial outlier.
     <br><br>""",
     unsafe_allow_html=True
 )
 col1, col2, col3 = st.columns([16.5, 67, 16.5])
-with col2:
-    st.image("okc_cost_of_ident.png", use_container_width=True)
-
-st.header("OPCM Outreach")
-st.write("Update this later")
 
 # Center the SVG at 90% width
 col1, col2, col3 = st.columns([5, 90, 5])
 with col2:
     st.image("Flowchart.svg", use_container_width=True)
+with col2:
+    st.image("okc_cost_of_ident.png", use_container_width=True)
+
+st.header("OPCM Outreach")
+st.write("Update this later")
