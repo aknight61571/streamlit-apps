@@ -156,7 +156,8 @@ st.markdown(
     <br>
     OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.<br>
     When risk reaches a pre-set threshold, OPCM pharmacist contact their precribers directly. <br><br>
-    Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism
+    Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism.
+    <br> Outlier threshold is the maximum cost without be considered a financial outlier.
     <br><br>""",
     unsafe_allow_html=True
 )
