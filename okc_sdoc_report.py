@@ -195,47 +195,49 @@ with col2:
 
 with col1:
     st.header('Exploding Costs in High-Risk Members')
-    st.write("""OPCM's provider outreach is imperative to avoid the exploding costs of opioid misuse:
+    st.write('''OPCM's provider outreach is imperative to avoid the exploding costs of opioid misuse:
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
     <br><br>
-    Doing the math, we see:""",
-    unsafe_allow_html=True)   # <- so HTML tags render properly
-
+    Doing the math, we see:''', unsafe_allow_html=True)
+    
     # User input for plan size
     plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
     
-    # Calculate flagged members per quarter
+    # Calculate values
     flagged_per_quarter = 0.02 * plan_size
     
-    # Create dataframe with updated calculations
+    # Create dataframe for the table
     data = {
-        'Plan Size': [plan_size, plan_size],
-        'Flagged per Quarter': [flagged_per_quarter, flagged_per_quarter],
-        '% Change': ['+196%', '-27%'],
-        'Cost Next Quarter': [
-            flagged_per_quarter * 171.55 * 2.96,  # No Supervision
-            flagged_per_quarter * 311.60 * 0.73   # OPCM Supervision
+        'No Supervision': [
+            plan_size,
+            flagged_per_quarter,
+            '+196%',
+            flagged_per_quarter * 171.55 * 2.96,
+            flagged_per_quarter * 171.55 * 2.96 * 4
         ],
-        'Total (Annual)': [
-            flagged_per_quarter * 171.55 * 2.96 * 4,
+        'OPCM Supervision': [
+            plan_size,
+            flagged_per_quarter,
+            '-27%',
+            flagged_per_quarter * 311.60 * 0.73,
             flagged_per_quarter * 311.60 * 0.73 * 4
         ]
     }
     
-    df_table = pd.DataFrame(data, index=['No Supervision', 'OPCM Supervision'])
+    df_table = pd.DataFrame(data, index=['Plan Size', 'Flagged per Quarter', '% Change', 'Cost Next Quarter', 'Total (Annual)'])
     
-    # Invert table so rows become metrics
-    df_table_inverted = df_table.T
-    
-    # Display in Streamlit
+    # Format the table with dollar signs
     st.dataframe(
-        df_table_inverted.style.format({
+        df_table.style.format({
+            'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) else x,
+            'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) else x
+        }, subset=pd.IndexSlice[['Plan Size', 'Flagged per Quarter'], :])
+        .format({
             'No Supervision': '${:,.2f}',
             'OPCM Supervision': '${:,.2f}'
-        }).format_index("{:}", axis=0)
+        }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)'], :])
     )
-
    
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
