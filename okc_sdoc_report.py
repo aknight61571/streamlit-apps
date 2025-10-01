@@ -174,10 +174,11 @@ with col2:
 
 st.write("Update this later")
 
-col1, col2, col3 = st.columns([47.5, 5, 47.5])
-
+col1, col2 = st.columns([67, 33])
 with col1:
     fig = pio.read_json('risk_factor_removal.json')
     st.plotly_chart(fig,use_container_width=True)
-with col3:
+    
+col1, col2 = st.columns([33, 67])
+with col2:
     st.image('okc_sdoc_savings.png',use_container_width=True)
