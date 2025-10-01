@@ -1,6 +1,7 @@
 import streamlit as st
 import base64
 import plotly.io as pio
+import pandas as pd
 
 # Page config
 st.set_page_config(page_title="Marketing Report", layout="wide")
