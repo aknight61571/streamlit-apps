@@ -202,7 +202,7 @@ with col1:
     Doing the math, we see:''', unsafe_allow_html=True)
     
     # User input for plan size
-    plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
+    plan_size = st.number_input('Enter Plan Size:', min_value=0, value=10000, step=500)
     
     # Calculate values
     flagged_per_quarter = 0.02 * plan_size
