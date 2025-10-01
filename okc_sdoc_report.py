@@ -166,8 +166,9 @@ with col2:
     st.image("okc_cost_of_ident.png", use_container_width=True)
 # Center the SVG at 90% width
 col1, col2, col3 = st.columns([5, 90, 5])
+
+st.header("OPCM Outreach")
 with col2:
     st.image("Flowchart.svg", use_container_width=True)
 
-st.header("OPCM Outreach")
 st.write("Update this later")
