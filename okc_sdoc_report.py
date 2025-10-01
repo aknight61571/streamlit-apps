@@ -155,7 +155,7 @@ st.markdown(
     """
     <br>
     <br>
-    OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators.<br>
+    OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators including, but not limited to, those above.<br>
     When risk reaches a pre-set threshold, OPCM pharmacist contact their precribers directly. <br><br>
     Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism.
     <br> Outlier threshold is the maximum cost without being considered a financial outlier.
@@ -191,3 +191,41 @@ with col2:
 col1, col2 = st.columns([33, 67])
 with col2:
     st.image('qident_qafter.png',use_container_width=True)
+
+with col1:
+    st.header('Exploding Costs in High-Risk Members')
+    st.write("""OPCM's provider outreach is imperative to avoid the exploding costs of opioid misuse:
+    <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
+    <li>With OPCM, the median cost <b>decreases by 27%</b>
+    <br><br>
+    Doing the math, we see:""",
+    unsafe_allow_html=True)   # <- so HTML tags render properly
+
+    # User input for plan size
+    plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
+    
+    # Calculate values
+    flagged_per_quarter = 0.02 * plan_size
+    
+    # Create dataframe for the table
+    data = {
+        'Plan Size': [plan_size, plan_size],
+        'Flagged per Quarter': [flagged_per_quarter, flagged_per_quarter],
+        'Flagged * Median Cost (FQ)': [flagged_per_quarter * 171.55, flagged_per_quarter * 311.60],
+        'Total (Annual)': [flagged_per_quarter * 171.55 * 4, flagged_per_quarter * 311.60 * 4]
+    }
+    
+    df_table = pd.DataFrame(data, index=['No Supervision', 'OPCM Supervision'])
+    
+    # Format the table with dollar signs
+    st.dataframe(
+        df_table.style.format({
+            'Plan Size': '{:,.0f}',
+            'Flagged per Quarter': '{:,.0f}',
+            'Flagged * Median Cost (FQ)': '${:,.2f}',
+            'Total (Annual)': '${:,.2f}'
+        })
+    )
+   
+#    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
+#   OPCM has minimal control of costs during the quarter of identification.
