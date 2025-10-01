@@ -206,6 +206,9 @@ with col1:
     
     # Calculate values
     flagged_per_quarter = 0.02 * plan_size
+    cost_next_quarter_no_supervision = flagged_per_quarter * 171.55 * 2.96
+    cost_next_quarter_opcm = flagged_per_quarter * 311.60 * 0.73
+    savings_annual = (cost_next_quarter_no_supervision - cost_next_quarter_opcm) * 4
     
     # Create dataframe for the table
     data = {
@@ -213,19 +216,21 @@ with col1:
             plan_size,
             flagged_per_quarter,
             '+196%',
-            flagged_per_quarter * 171.55 * 2.96,
-            flagged_per_quarter * 171.55 * 2.96 * 4
+            cost_next_quarter_no_supervision,
+            cost_next_quarter_no_supervision * 4,
+            ''
         ],
         'OPCM Supervision': [
             plan_size,
             flagged_per_quarter,
             '-27%',
-            flagged_per_quarter * 311.60 * 0.73,
-            flagged_per_quarter * 311.60 * 0.73 * 4
+            cost_next_quarter_opcm,
+            cost_next_quarter_opcm * 4,
+            savings_annual
         ]
     }
     
-    df_table = pd.DataFrame(data, index=['Plan Size', 'Flagged per Quarter', '% Change', 'Cost Next Quarter', 'Total (Annual)'])
+    df_table = pd.DataFrame(data, index=['Plan Size', 'Flagged per Quarter', '% Cost Increase', 'Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'])
     
     # Format the table with dollar signs
     st.dataframe(
@@ -236,8 +241,7 @@ with col1:
         .format({
             'No Supervision': '${:,.2f}',
             'OPCM Supervision': '${:,.2f}'
-        }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)'], :])
-    )
-   
+        }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'], :])
+    ) 
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
