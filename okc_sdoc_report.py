@@ -178,7 +178,16 @@ col1, col2 = st.columns([67, 33])
 with col1:
     fig = pio.read_json('risk_factor_removal.json')
     st.plotly_chart(fig,use_container_width=True)
-    
+with col2:
+    st.header('Why is OPCM an Ongoing Service?')
+    st.write('''Unfortunately, it's not as simple as contacting providers once to resolve the issue.
+    <br><br>Even under OPCM supervision, roughly <b>40% of a quarterly identified cohort is made of newly identified members.</b><br><br>
+    This is due to a number of reasons, including:
+    <li> Naturally arising conditions warranting extended opioid use
+    <li> Appearance of new providers not following CDC guidelines
+    <br>
+    ''',unsafe_allow_html=True
+    )        
 col1, col2 = st.columns([33, 67])
 with col2:
     st.image('qident_qafter.png',use_container_width=True)
