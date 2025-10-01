@@ -164,8 +164,6 @@ st.markdown(
 col1, col2, col3 = st.columns([16.5, 67, 16.5])
 with col2:
     st.image("okc_cost_of_ident.png", use_container_width=True)
-# Center the SVG at 90% width
-]
 
 st.header("OPCM Outreach")
 
