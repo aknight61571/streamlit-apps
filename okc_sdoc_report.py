@@ -218,7 +218,7 @@ with col1:
             '+196%',
             cost_next_quarter_no_supervision,
             cost_next_quarter_no_supervision * 4,
-            ''
+            np.nan
         ],
         'OPCM Supervision': [
             plan_size,
@@ -232,16 +232,17 @@ with col1:
     
     df_table = pd.DataFrame(data, index=['Plan Size', 'Flagged per Quarter', '% Cost Increase', 'Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'])
     
-    # Format the table with dollar signs
-    st.dataframe(
-        df_table.style.format({
-            'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) else x,
-            'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) else x
-        }, subset=pd.IndexSlice[['Plan Size', 'Flagged per Quarter'], :])
-        .format({
-            'No Supervision': '${:,.2f}',
-            'OPCM Supervision': '${:,.2f}'
-        }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'], :])
-    ) 
+    # Format the table
+    formatted = df_table.style.format({
+        'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
+        'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
+    }, subset=pd.IndexSlice[['Plan Size', 'Flagged per Quarter'], :])
+    
+    formatted = formatted.format({
+        'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
+        'OPCM Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
+    }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'], :])
+    
+    st.dataframe(formatted)
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
