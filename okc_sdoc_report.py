@@ -205,28 +205,37 @@ with col1:
     # User input for plan size
     plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
     
-    # Calculate values
+    # Calculate flagged members per quarter
     flagged_per_quarter = 0.02 * plan_size
     
-    # Create dataframe for the table
+    # Create dataframe with updated calculations
     data = {
         'Plan Size': [plan_size, plan_size],
         'Flagged per Quarter': [flagged_per_quarter, flagged_per_quarter],
-        'Flagged * Median Cost (FQ)': [flagged_per_quarter * 171.55, flagged_per_quarter * 311.60],
-        'Total (Annual)': [flagged_per_quarter * 171.55 * 4, flagged_per_quarter * 311.60 * 4]
+        '% Change': ['+196%', '-27%'],
+        'Cost Next Quarter': [
+            flagged_per_quarter * 171.55 * 2.96,  # No Supervision
+            flagged_per_quarter * 311.60 * 0.73   # OPCM Supervision
+        ],
+        'Total (Annual)': [
+            flagged_per_quarter * 171.55 * 2.96 * 4,
+            flagged_per_quarter * 311.60 * 0.73 * 4
+        ]
     }
     
     df_table = pd.DataFrame(data, index=['No Supervision', 'OPCM Supervision'])
     
-    # Format the table with dollar signs
+    # Invert table so rows become metrics
+    df_table_inverted = df_table.T
+    
+    # Display in Streamlit
     st.dataframe(
-        df_table.style.format({
-            'Plan Size': '{:,.0f}',
-            'Flagged per Quarter': '{:,.0f}',
-            'Flagged * Median Cost (FQ)': '${:,.2f}',
-            'Total (Annual)': '${:,.2f}'
-        })
+        df_table_inverted.style.format({
+            'No Supervision': '${:,.2f}',
+            'OPCM Supervision': '${:,.2f}'
+        }).format_index("{:}", axis=0)
     )
+
    
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
