@@ -255,7 +255,7 @@ with col1:
     formatted = df_table.style.format({
         'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Flagged (FQ, non-outlier)', 'Flagged (FQ, outlier)'], :])
+    }, subset=pd.IndexSlice[['Flagged\n(FQ, non-outlier)', 'Flagged\n(FQ, outlier)'], :])
     
     formatted = formatted.format({
         'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
