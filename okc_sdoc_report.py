@@ -260,7 +260,7 @@ with col1:
     formatted = formatted.format({
         'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Cost Next FQ (non-outlier, per member)', 'Cost Next FQ (outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
+    }, subset=pd.IndexSlice[['Cost Next FQ\n(non-outlier, per member)', 'Cost Next FQ\n(outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
     
     st.dataframe(formatted)
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
