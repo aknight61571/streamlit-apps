@@ -199,49 +199,68 @@ with col1:
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
     <br><br>
-    Given a ~2% identification rate per quarter:''', unsafe_allow_html=True)
+    Doing the math, we see:''', unsafe_allow_html=True)
     
     # User input for plan size
-    plan_size = st.number_input('Enter Plan Size:', min_value=0, value=10000, step=500)
+    plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
     
     # Calculate values
-    flagged_per_quarter = 0.02 * plan_size
-    cost_next_quarter_no_supervision = flagged_per_quarter * 171.55 * 2.96
-    cost_next_quarter_opcm = flagged_per_quarter * 311.60 * 0.73
-    savings_annual = (cost_next_quarter_no_supervision - cost_next_quarter_opcm) * 4
+    flagged_total = 0.02 * plan_size
+    flagged_non_outlier = 0.88 * flagged_total
+    flagged_outlier = 0.12 * flagged_total
+    
+    # Cost per member values
+    cost_non_outlier_opcm = 228.93
+    cost_non_outlier_no_super = 505.03
+    cost_outlier_opcm = 5321.71
+    cost_outlier_no_super = 8804.08
+    
+    # Calculate Total (Annual)
+    total_annual_no_super = (4 * cost_non_outlier_no_super * flagged_non_outlier) + (4 * cost_outlier_no_super * flagged_outlier)
+    total_annual_opcm = (4 * cost_non_outlier_opcm * flagged_non_outlier) + (4 * cost_outlier_opcm * flagged_outlier)
+    
+    # Calculate Savings (Annual)
+    savings_annual = total_annual_no_super - total_annual_opcm
     
     # Create dataframe for the table
     data = {
         'No Supervision': [
-            plan_size,
-            flagged_per_quarter,
-            '+196%',
-            cost_next_quarter_no_supervision,
-            cost_next_quarter_no_supervision * 4,
+            flagged_non_outlier,
+            flagged_outlier,
+            cost_non_outlier_no_super,
+            cost_outlier_no_super,
+            total_annual_no_super,
             np.nan
         ],
         'OPCM Supervision': [
-            plan_size,
-            flagged_per_quarter,
-            '-27%',
-            cost_next_quarter_opcm,
-            cost_next_quarter_opcm * 4,
+            flagged_non_outlier,
+            flagged_outlier,
+            cost_non_outlier_opcm,
+            cost_outlier_opcm,
+            total_annual_opcm,
             savings_annual
         ]
     }
     
-    df_table = pd.DataFrame(data, index=['Plan Size', 'Flagged per Quarter', '% Cost Increase', 'Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'])
+    df_table = pd.DataFrame(data, index=[
+        'Flagged (FQ, non-outlier)',
+        'Flagged (FQ, outlier)',
+        'Cost Next FQ (non-outlier, per member)',
+        'Cost Next FQ (outlier, per member)',
+        'Total (Annual)',
+        'Savings (Annual)'
+    ])
     
     # Format the table
     formatted = df_table.style.format({
         'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Plan Size', 'Flagged per Quarter'], :])
+    }, subset=pd.IndexSlice[['Flagged (FQ, non-outlier)', 'Flagged (FQ, outlier)'], :])
     
     formatted = formatted.format({
         'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Cost Next Quarter', 'Total (Annual)', 'Savings (Annual)'], :])
+    }, subset=pd.IndexSlice[['Cost Next FQ (non-outlier, per member)', 'Cost Next FQ (outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
     
     st.dataframe(formatted)
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
