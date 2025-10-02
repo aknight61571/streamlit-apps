@@ -198,8 +198,8 @@ with col1:
     st.write('''
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
-    <i>In FQ after identification, ~12% of members exceed outlier threshold with/without supervision
-    <i> Those members have a median cost of $8,804.04 without supervison, but $5,321.71 with supervision.
+    <li>In FQ after identification, ~12% of members exceed outlier threshold with/without supervision
+    <li> Those members have a median cost of $8,804.04 without supervison, but $5,321.71 with supervision.
     <br>
     With a 2% ID rate, 12% being outliers:''', unsafe_allow_html=True)
     
