@@ -243,10 +243,10 @@ with col1:
     }
     
     df_table = pd.DataFrame(data, index=[
-        'Flagged\n(FQ, non-outlier)',
-        'Flagged\n(FQ, outlier)',
-        'Cost Next FQ\n(non-outlier, per member)',
-        'Cost Next FQ\n(outlier, per member)',
+        'Flagged<br>(FQ, non-outlier)',
+        'Flagged<br>(FQ, outlier)',
+        'Cost Next FQ<br>(non-outlier, per member)',
+        'Cost Next FQ<br>(outlier, per member)',
         'Total (Annual)',
         'Savings (Annual)'
     ])
@@ -255,13 +255,13 @@ with col1:
     formatted = df_table.style.format({
         'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Flagged\n(FQ, non-outlier)', 'Flagged\n(FQ, outlier)'], :])
+    }, subset=pd.IndexSlice[['Flagged<br>(FQ, non-outlier)', 'Flagged<br>(FQ, outlier)'], :])
     
     formatted = formatted.format({
         'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
         'OPCM Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Cost Next FQ\n(non-outlier, per member)', 'Cost Next FQ\n(outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
+    }, subset=pd.IndexSlice[['Cost Next FQ<br>(non-outlier, per member)', 'Cost Next FQ<br>(outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
     
-    st.dataframe(formatted)
+    st.dataframe(formatted, use_container_width=True)
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
