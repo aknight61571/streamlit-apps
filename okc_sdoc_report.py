@@ -200,7 +200,7 @@ with col1:
     <li>With OPCM, the median cost <b>decreases by 27%</b>
     <li>In FQ after identification, ~12% of members exceed outlier threshold with/without supervision
     <li> Those members have a median cost of $8,804.04 without supervison, but $5,321.71 with supervision.
-    <br>
+    <br><br>
     With a 2% ID rate, 12% being outliers:''', unsafe_allow_html=True)
     
     # User input for plan size
