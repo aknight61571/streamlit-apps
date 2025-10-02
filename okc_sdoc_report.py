@@ -195,11 +195,13 @@ with col2:
 
 with col1:
     st.header('Exploding Costs in High-Risk Members')
-    st.write('''OPCM's provider outreach is imperative to avoid the exploding costs of opioid misuse:
+    st.write('''
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
-    <br><br>
-    Doing the math, we see:''', unsafe_allow_html=True)
+    <i>In FQ after identification, ~12% of members exceed outlier threshold with/without supervision
+    <i> Those members have a median cost of $8,804.04 without supervison, but $5,321.71 with supervision.
+    <br>
+    With a 2% ID rate, 12% being outliers:''', unsafe_allow_html=True)
     
     # User input for plan size
     plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
