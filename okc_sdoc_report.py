@@ -243,10 +243,10 @@ with col1:
     }
     
     df_table = pd.DataFrame(data, index=[
-        'Flagged (FQ, non-outlier)',
-        'Flagged (FQ, outlier)',
-        'Cost Next FQ (non-outlier, per member)',
-        'Cost Next FQ (outlier, per member)',
+        'Flagged\n(FQ, non-outlier)',
+        'Flagged\n(FQ, outlier)',
+        'Cost Next FQ\n(non-outlier, per member)',
+        'Cost Next FQ\n(outlier, per member)',
         'Total (Annual)',
         'Savings (Annual)'
     ])
