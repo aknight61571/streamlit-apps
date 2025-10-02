@@ -222,46 +222,51 @@ with col1:
     # Calculate Savings (Annual)
     savings_annual = total_annual_no_super - total_annual_opcm
     
-    # Create dataframe for the table
-    data = {
-        'No Supervision': [
-            flagged_non_outlier,
-            flagged_outlier,
-            cost_non_outlier_no_super,
-            cost_outlier_no_super,
-            total_annual_no_super,
-            np.nan
-        ],
-        'OPCM Supervision': [
-            flagged_non_outlier,
-            flagged_outlier,
-            cost_non_outlier_opcm,
-            cost_outlier_opcm,
-            total_annual_opcm,
-            savings_annual
-        ]
-    }
+    # Create HTML table
+    html_table = f"""
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;"></th>
+                <th style="text-align: right; padding: 8px; border-bottom: 2px solid #ddd;">No Supervision</th>
+                <th style="text-align: right; padding: 8px; border-bottom: 2px solid #ddd;">OPCM Supervision</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Flagged<br>(FQ, non-outlier)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">{flagged_non_outlier:,.0f}</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">{flagged_non_outlier:,.0f}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Flagged<br>(FQ, outlier)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">{flagged_outlier:,.0f}</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">{flagged_outlier:,.0f}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Cost Next FQ<br>(non-outlier, per member)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${cost_non_outlier_no_super:,.2f}</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${cost_non_outlier_opcm:,.2f}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Cost Next FQ<br>(outlier, per member)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${cost_outlier_no_super:,.2f}</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${cost_outlier_opcm:,.2f}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total (Annual)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${total_annual_no_super:,.2f}</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${total_annual_opcm:,.2f}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Savings (Annual)</td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;"></td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #ddd;">${savings_annual:,.2f}</td>
+            </tr>
+        </tbody>
+    </table>
+    """
     
-    df_table = pd.DataFrame(data, index=[
-        'Flagged<br>(FQ, non-outlier)',
-        'Flagged<br>(FQ, outlier)',
-        'Cost Next FQ<br>(non-outlier, per member)',
-        'Cost Next FQ<br>(outlier, per member)',
-        'Total (Annual)',
-        'Savings (Annual)'
-    ])
-    
-    # Format the table
-    formatted = df_table.style.format({
-        'No Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
-        'OPCM Supervision': lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Flagged<br>(FQ, non-outlier)', 'Flagged<br>(FQ, outlier)'], :])
-    
-    formatted = formatted.format({
-        'No Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else '',
-        'OPCM Supervision': lambda x: f'${x:,.2f}' if isinstance(x, (int, float)) and not pd.isna(x) else ''
-    }, subset=pd.IndexSlice[['Cost Next FQ<br>(non-outlier, per member)', 'Cost Next FQ<br>(outlier, per member)', 'Total (Annual)', 'Savings (Annual)'], :])
-    
-    st.dataframe(formatted, use_container_width=True)
+    st.markdown(html_table, unsafe_allow_html=True)
 #    Due to not recieving quarterly claims until the beginning of the subsequent quarter,<br>
 #   OPCM has minimal control of costs during the quarter of identification.
