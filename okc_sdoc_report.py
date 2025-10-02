@@ -176,7 +176,7 @@ with col2:
 st.write("""All prescribers who wrote an opioid Rx for a plan member identified by OpioidRx-Ai receive communication from OPCM pharmacists.
 <li>Prescribers for members with <90 continuous days of an opioid recieve a letter stating the employer has adopted CDC prescribing guidelines for opioid prescriptions.
 <li> Prescribers for members with >90 continuous days of an opioid recieve a personal call in addition to this letter, informing them of current CDC guidelines and verifying their intent to adhere.
-
+<br><br>
 The quality of OPCM's outreach ensures that a large portion of high-risk cohorts are considered low-risk by the following fiscal quarter and do not return to high-risk later.
 """,unsafe_allow_html=True)
 
