@@ -195,6 +195,9 @@ with col2:
     ''',unsafe_allow_html=True
     )        
 col1, col2 = st.columns([33, 67])
+
+with col1: 
+    st.write('hello')
 with col2:
     fig = pio.read_json('cdc_guideline.json')
     st.plotly_chart(fig,use_container_width=True)
