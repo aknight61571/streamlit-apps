@@ -203,7 +203,7 @@ with col2:
     st.plotly_chart(fig,use_container_width=True)
 
 
-col1, col2 = st.columns([33, 67])
+col1, col2 = st.columns([67, 33])
 with col1:
     st.image('qident_qafter.png',use_container_width=True)
 
