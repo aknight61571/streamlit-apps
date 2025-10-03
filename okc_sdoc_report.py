@@ -216,7 +216,7 @@ with col1:
     str.write('''How are 12% considered outliers? <i>Standard outliers are computed using the mean, which is subject to extreme outliers.</i>
               <br>
               Computing outliers with percentiles ensures that large jumps from the norm are always noted
-            '''
+            ''',unsafe_allow_html=True)
 with col2:
     st.write('<br><br>',unsafe_allow_html=False)
     st.header('Exploding Costs in High-Risk Members')
