@@ -345,5 +345,101 @@ with col2:
                 'Member',
                 df_filtered['blinded_member'].unique()
             )
+            member_data = df_filtered[df_filtered['blinded_member'] == member].iloc[0]
         else:
             st.warning(f"No members found")
+            member_data = None
+    
+    # Display estimated and actual costs
+    if member_data is not None:
+        st.write(f"**Estimated Next Cost:** ${member_data['pred']:,.2f}")
+        st.write(f"**Actual Next Cost:** ${member_data['tgt']:,.2f}")
+        
+        # Clear inputs button state
+        if 'clear_inputs' not in st.session_state:
+            st.session_state.clear_inputs = False
+        
+        # Regression input buttons - Row 1
+        input_col1, input_col2, input_col3 = st.columns(3)
+        
+        with input_col1:
+            paid_value = st.number_input(
+                'Paid (This Quarter)',
+                value=float(member_data['Paid Amount(This Quarter)']) if not st.session_state.clear_inputs else 0.0,
+                key='paid_input'
+            )
+        
+        with input_col2:
+            age_value = st.number_input(
+                'Age',
+                value=int(member_data['Age']) if not st.session_state.clear_inputs else 0,
+                key='age_input'
+            )
+        
+        with input_col3:
+            transactions_value = st.number_input(
+                'n Transactions',
+                value=int(member_data['n Transactions(This Quarter)']) if not st.session_state.clear_inputs else 0,
+                key='transactions_input'
+            )
+        
+        # Regression input buttons - Row 2
+        input_col4, input_col5, input_col6 = st.columns(3)
+        
+        with input_col4:
+            mme_value = st.selectbox(
+                '50-100 MME',
+                ['Yes', 'No'],
+                index=0 if member_data['50-100 MME'] == 1 else 1,
+                key='mme_input'
+            )
+        
+        with input_col5:
+            prescribers_value = st.selectbox(
+                '2+ Prescribers',
+                ['Yes', 'No'],
+                index=0 if member_data['2+ Opioid Prescribers'] == 1 else 1,
+                key='prescribers_input'
+            )
+        
+        with input_col6:
+            benzo_value = st.selectbox(
+                'Benzo + Opioid',
+                ['Yes', 'No'],
+                index=0 if member_data['Benzo + Opioid'] == 1 else 1,
+                key='benzo_input'
+            )
+        
+        # Regression input buttons - Row 3
+        input_col7, input_col8, input_col9 = st.columns(3)
+        
+        with input_col7:
+            mme_additional_value = st.selectbox(
+                '50-100: Additional',
+                ['Yes', 'No'],
+                index=0 if member_data['50-100 MME: Additional w/o Supervision'] == 1 else 1,
+                key='mme_additional_input'
+            )
+        
+        with input_col8:
+            prescribers_additional_value = st.selectbox(
+                '2+ Prescribers: Additional',
+                ['Yes', 'No'],
+                index=0 if member_data['2+ Opioid Prescribers: Additional w/o Supervision'] == 1 else 1,
+                key='prescribers_additional_input'
+            )
+        
+        with input_col9:
+            benzo_additional_value = st.selectbox(
+                'Benzo + Opioid: Additional',
+                ['Yes', 'No'],
+                index=0 if member_data['Benzo + Opioid: Additional w/o Supervision'] == 1 else 1,
+                key='benzo_additional_input'
+            )
+        
+        # Clear Inputs button
+        if st.button('Clear Inputs', type='primary'):
+            st.session_state.clear_inputs = True
+            st.rerun()
+        else:
+            st.session_state.clear_inputs = False
