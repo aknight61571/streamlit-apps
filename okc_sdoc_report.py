@@ -157,7 +157,7 @@ st.markdown(
     <br>
     <br>
     OPCM's innovative <i>OpioidRx-AI</i> model is trained to evaluate opioid-related risk based on CDC-researched indicators including, but not limited to, those above.<br>
-    When risk reaches a pre-set threshold, OPCM pharmacist contact their precribers directly. <br><br>
+    When risk reaches a pre-set threshold, OPCM pharmacists contact their precribers directly. <br><br>
     Such members exceeding the threshold(flagged) carry direct financial impacts due to coverage expense and delayed financial impacts due to abenteeism and presenteeism.
     <br> <u>Outlier threshold is the maximum cost without being considered a financial outlier.</u>
     <br><br>""",
@@ -203,10 +203,10 @@ with col1:
     st.write('''
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
     <li>With OPCM, the median cost <b>decreases by 27%</b>
-    <li>In FQ after identification, ~12% of members exceed outlier threshold with/without supervision
+    <li>In FQ after identification, ~12% of members exceed outlier threshold with or without supervision
     <li> Those members have a median cost of $8,804.04 without supervison, but $5,321.71 with supervision.
     <br><br>
-    With a 2% ID rate, 12% being outliers:''', unsafe_allow_html=True)
+    With a 2% ID rate, 12% of which being outliers:''', unsafe_allow_html=True)
     
     # User input for plan size
     plan_size = st.number_input('Enter Plan Size:', min_value=1000, value=10000, step=1000)
