@@ -280,7 +280,8 @@ with col1:
 
 
 # Regression Section
-col1, col2 = st.columns([0.67, 0.33])
+# Regression Section
+col1, col2 = st.columns([0.55, 0.45])
 
 with col1:
     # Load and display the Plotly figure
@@ -305,11 +306,28 @@ with col2:
         'Benzo + Opioid: Additional w/o Supervision': 0.071014
     }
     
-    # Supervision Status button
-    supervision_status = st.selectbox(
-        'Supervision Status',
-        ['With OPCM', 'Without OPCM']
-    )
+    # Create three columns for the preliminary buttons
+    btn_col1, btn_col2, btn_col3 = st.columns(3)
+    
+    with btn_col1:
+        # Supervision Status button
+        supervision_status = st.selectbox(
+            'Supervision Status',
+            ['With OPCM', 'Without OPCM']
+        )
+    
+    with btn_col2:
+        # Indicator button
+        indicator_options = [
+            '50-100 MME',
+            '2+ Opioid Prescribers',
+            'Benzo + Opioid',
+            '50-100 MME: Additional w/o Supervision',
+            '2+ Opioid Prescribers: Additional w/o Supervision',
+            'Benzo + Opioid: Additional w/o Supervision'
+        ]
+        
+        indicator = st.selectbox('Indicator', indicator_options)
     
     # Load appropriate dataframe based on supervision status
     if supervision_status == 'With OPCM':
@@ -317,33 +335,15 @@ with col2:
     else:
         df_reg = pd.read_csv('okc_finalreg_df.csv')
     
-    # Indicator button
-    indicator_options = [
-        '50-100 MME',
-        '2+ Opioid Prescribers',
-        'Benzo + Opioid',
-        '50-100 MME: Additional w/o Supervision',
-        '2+ Opioid Prescribers: Additional w/o Supervision',
-        'Benzo + Opioid: Additional w/o Supervision'
-    ]
-    
-    indicator = st.selectbox('Indicator', indicator_options)
-    
     # Filter dataframe based on indicator
     df_filtered = df_reg[df_reg[indicator] == 1]
     
-    # Member button
-    if len(df_filtered) > 0:
-        member = st.selectbox(
-            'Member',
-            df_filtered['blinded_member'].unique()
-        )
-        
-        # Get the selected member's data
-        member_data = df_filtered[df_filtered['blinded_member'] == member].iloc[0]
-        
-        st.write(f"**Selected Member:** {member}")
-        st.write(f"**Indicator:** {indicator}")
-        st.write(f"**Supervision:** {supervision_status}")
-    else:
-        st.warning(f"No members found with {indicator} = 1")
+    with btn_col3:
+        # Member button
+        if len(df_filtered) > 0:
+            member = st.selectbox(
+                'Member',
+                df_filtered['blinded_member'].unique()
+            )
+        else:
+            st.warning(f"No members found")
