@@ -222,7 +222,7 @@ with col1:
     )
 
 with col2:
-    st.write('<br><br>',unsafe_allow_html=False)
+    st.write('<br><br>',unsafe_allow_html=True)
     st.header('Exploding Costs in High-Risk Members')
     st.write('''
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
