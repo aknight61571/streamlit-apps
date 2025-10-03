@@ -212,11 +212,15 @@ with col2:
 
 col1, col2 = st.columns([67, 33])
 with col1:
-    st.image('qident_qafter.png',use_container_width=True)
-    str.write('''How are 12% considered outliers? <i>Standard outliers are computed using the mean, which is subject to extreme outliers.</i>
-              <br>
-              Computing outliers with percentiles ensures that large jumps from the norm are always noted
-            ''',unsafe_allow_html=True)
+    st.image('qident_qafter.png', use_container_width=True)
+    st.write(
+        """How are 12% considered outliers? 
+        <i>Standard outliers are computed using the mean, which is subject to extreme outliers.</i><br>
+        Computing outliers with percentiles ensures that large jumps from the norm are always noted
+        """,
+        unsafe_allow_html=True
+    )
+
 with col2:
     st.write('<br><br>',unsafe_allow_html=False)
     st.header('Exploding Costs in High-Risk Members')
