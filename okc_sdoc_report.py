@@ -199,7 +199,6 @@ col1, col2 = st.columns([33, 67])
 with col1: 
     st.header('Ensuring CDC Adherence')
     st.write('''OPCM finds that re-identified providers have remained adherent to CDC guidelines for prescribing opioids.<br>While newly appearing prescribers are inevitable, this assists in preventing risk as well as responding to it.
-    CDC Guidelines:
     <br>
     <li><b>Opioid Contract</b>: Patient informed of risks of opioid therapy, pledges not to request early refills. Signed by doctor and patient
     <li><b>Drug Screen</b>: A urine screening to ensure contraindicated substances are not present
