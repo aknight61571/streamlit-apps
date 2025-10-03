@@ -196,6 +196,12 @@ with col2:
     )        
 col1, col2 = st.columns([33, 67])
 with col2:
+    fig = pio.read_json('cdc_guideline.json')
+    st.plotly_chart(fig,use_container_width=True)
+
+
+col1, col2 = st.columns([33, 67])
+with col2:
     st.image('qident_qafter.png',use_container_width=True)
 
 with col1:
