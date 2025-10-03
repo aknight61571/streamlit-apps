@@ -197,7 +197,9 @@ with col2:
 col1, col2 = st.columns([33, 67])
 
 with col1: 
-    st.write('hello')
+    st.header('Ensuring CDC Adherence')
+    st.write('OPCM finds that re-identified providers have remained adherent to CDC guidelines for prescribing opioids.<br>While newly appearing prescribers are inevitable, this assists in preventing risk as well as responding to it.') 
+    
 with col2:
     fig = pio.read_json('cdc_guideline.json')
     st.plotly_chart(fig,use_container_width=True)
@@ -208,6 +210,7 @@ with col1:
     st.image('qident_qafter.png',use_container_width=True)
 
 with col2:
+    st.write('<br><br>',unsafe_allow_html=False)
     st.header('Exploding Costs in High-Risk Members')
     st.write('''
     <li>Without OPCM, the median cost of an identified member <b>increases by <b>196%</b> the next quarter.
