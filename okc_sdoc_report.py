@@ -208,7 +208,6 @@ with col1:
         legend=dict(font=dict(color='white'))
     )
     st.plotly_chart(fig, use_container_width=True)
-    st.plotly_chart(fig,use_container_width=True)
 with col2:
     st.header('Why is OPCM an Ongoing Service?')
     st.write('''Unfortunately, it's not as simple as contacting providers once to resolve the issue.
@@ -241,7 +240,6 @@ with col2:
         legend=dict(font=dict(color='white'))
     )
     st.plotly_chart(fig, use_container_width=True)
-    st.plotly_chart(fig,use_container_width=True)
 
 
 col1, col2 = st.columns([67, 33])
