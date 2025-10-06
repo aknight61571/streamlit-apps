@@ -199,6 +199,11 @@ The quality of OPCM's outreach ensures that a large portion of high-risk cohorts
 col1, col2 = st.columns([67, 33])
 with col1:
     fig = pio.read_json('risk_factor_removal.json')
+        fig.update_layout(
+        template='plotly_dark',
+        paper_bgcolor='#0E1117',
+        plot_bgcolor='#0E1117',
+    )
     st.plotly_chart(fig,use_container_width=True)
 with col2:
     st.header('Why is OPCM an Ongoing Service?')
@@ -223,6 +228,11 @@ with col1:
     
 with col2:
     fig = pio.read_json('cdc_guideline.json')
+    fig.update_layout(
+        template='plotly_dark',
+        paper_bgcolor='#0E1117',
+        plot_bgcolor='#0E1117',
+    )
     st.plotly_chart(fig,use_container_width=True)
 
 
