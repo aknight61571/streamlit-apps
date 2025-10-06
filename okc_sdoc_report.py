@@ -222,8 +222,8 @@ with col1:
     st.write('''OPCM finds that re-identified providers have remained adherent to CDC guidelines for prescribing opioids.<br>While newly appearing prescribers are inevitable, this assists in preventing risk as well as responding to it.
     <br>
     <li><b>Opioid Contract</b>: Patient informed of risks of opioid therapy, pledges not to request early refills. Signed by doctor and patient
-    <li><b>Drug Screen</b>: A urine screening to ensure contraindicated substances are not present
-    <li><b>Discontinuation Plan</b>: Describes how doctor and patient will continue to address pain if it becomes chronic
+    <li><b>Drug Screen</b>: Urine screen to validate dosage level
+    <li><b>Discontinuation Plan</b>: Describes patient referrals to address pain
     ''',unsafe_allow_html=True) 
     
 with col2:
