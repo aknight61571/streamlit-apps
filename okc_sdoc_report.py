@@ -199,7 +199,7 @@ The quality of OPCM's outreach ensures that a large portion of high-risk cohorts
 col1, col2 = st.columns([67, 33])
 with col1:
     fig = pio.read_json('risk_factor_removal.json')
-        fig.update_layout(
+    fig.update_layout(
         template='plotly_dark',
         paper_bgcolor='#0E1117',
         plot_bgcolor='#0E1117',
