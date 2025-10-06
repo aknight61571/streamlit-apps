@@ -203,7 +203,11 @@ with col1:
         template='plotly_dark',
         paper_bgcolor='#0E1117',
         plot_bgcolor='#0E1117',
+        font=dict(color='white'),
+        title_font=dict(color='white'),
+        legend=dict(font=dict(color='white'))
     )
+    st.plotly_chart(fig, use_container_width=True)
     st.plotly_chart(fig,use_container_width=True)
 with col2:
     st.header('Why is OPCM an Ongoing Service?')
@@ -232,7 +236,11 @@ with col2:
         template='plotly_dark',
         paper_bgcolor='#0E1117',
         plot_bgcolor='#0E1117',
+        font=dict(color='white'),
+        title_font=dict(color='white'),
+        legend=dict(font=dict(color='white'))
     )
+    st.plotly_chart(fig, use_container_width=True)
     st.plotly_chart(fig,use_container_width=True)
 
 
