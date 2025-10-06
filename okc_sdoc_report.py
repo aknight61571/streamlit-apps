@@ -7,13 +7,29 @@ import numpy as np
 st.set_page_config(page_title="Marketing Report", layout="wide")
 
 # Dark theme + box styles
+# Dark theme + box styles
 st.markdown(
     """
     <style>
-        body {
-            background-color: #0E1117;
+        /* Force dark background on all Streamlit containers */
+        .stApp {
+            background-color: #0E1117 !important;
+        }
+        [data-testid="stAppViewContainer"] {
+            background-color: #0E1117 !important;
             color: white;
         }
+        [data-testid="stAppViewContainer"] > .main {
+            background-color: #0E1117 !important;
+        }
+        [data-testid="stHeader"] {
+            background-color: #0E1117 !important;
+        }
+        section[data-testid="stSidebar"] {
+            background-color: #0E1117 !important;
+        }
+        
+        /* Your custom styles */
         .section-header {
             font-size: 28px;
             font-weight: bold;
